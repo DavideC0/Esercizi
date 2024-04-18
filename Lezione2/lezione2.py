@@ -32,3 +32,10 @@ guest_list: list = ["Catalina", "Bruna", "Gino"]
 print(f"{guest_list[0]} vorrei che venissi a cena con me")
 print(f"{guest_list[1]} per festeggiare il tuo compleanno andiamo a cena")
 print(f"{guest_list[2]} avrei voluto fare un'ultima cena con te prima succedesse")
+#3-5 Changing Guest List
+not_coming: str = guest_list.pop(2)
+print(f"{not_coming} dato che non ci sei non puoi nemmeno venire")
+guest_list.append("Roberto")
+print(f"{guest_list[0]} vorrei che venissi a cena con me")
+print(f"{guest_list[1]} per festeggiare il tuo compleanno andiamo a cena")
+print(f"{guest_list[2]} vieni anche tu a cena")
