@@ -39,3 +39,11 @@ guest_list.append("Roberto")
 print(f"{guest_list[0]} vorrei che venissi a cena con me")
 print(f"{guest_list[1]} per festeggiare il tuo compleanno andiamo a cena")
 print(f"{guest_list[2]} vieni anche tu a cena")
+#3-6 More Guestes
+for i in range(len(guest_list)):
+    print(f"Ciao {guest_list[i]}, ho trovato un tavolo più grande venite qui invece")
+guest_list.insert(0, "Giacomo")
+guest_list.insert(2, "Matteo")
+guest_list.append("Veronica")
+for i in range(len(guest_list)):
+    print(f"Ciao {guest_list[i]}, sei invitat al nuovo luogo x con un tavolo più grande")
