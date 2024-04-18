@@ -27,3 +27,8 @@ cars: str = ["Ferrari", "Panda", "Fiesta"]
 sentence: str = ["Mi piacerebbe guidare una", "Ho sognato di avere una", "Sto guidando una"]
 for i in range(len(cars)):
     print(f"{sentence[i]} {cars[i]}")
+#3-4 Guest List
+guest_list: list = ["Catalina", "Bruna", "Gino"]
+print(f"{guest_list[0]} vorrei che venissi a cena con me")
+print(f"{guest_list[1]} per festeggiare il tuo compleanno andiamo a cena")
+print(f"{guest_list[2]} avrei voluto fare un'ultima cena con te prima succedesse")
