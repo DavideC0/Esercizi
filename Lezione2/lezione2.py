@@ -23,3 +23,7 @@ for i in range(len(names_list)):
 for i in range(len(names_list)):
     print(f"Ciao {names_list[i]}, come stai?")
 #3-3 Your Own List
+cars: str = ["Ferrari", "Panda", "Fiesta"]
+sentence: str = ["Mi piacerebbe guidare una", "Ho sognato di avere una", "Sto guidando una"]
+for i in range(len(cars)):
+    print(f"{sentence[i]} {cars[i]}")
