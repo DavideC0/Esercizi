@@ -19,6 +19,13 @@ def rewrite_dict(d: dict[str,int], somma: int) -> dict[str, float]:
     
     return d1
 
+def subtract(x: float, y: float) -> float:
+    s: float = x - y
+    return s
+
 d: dict = {"ciao": 2, "hello": 3}
 d1: dict = rewrite_dict(d,crea_somma(d))
 print(f"Il dizionario normale è {d}, quello trasformato è {d1}")
+x, y = 10.4, 5.8
+sottrazione: float = subtract(x,y)
+print(f"La sottrazione tra {x} e {y} è {sottrazione}")
