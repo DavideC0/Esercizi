@@ -6,17 +6,19 @@
     dei valori di d, ossia 2 + 3 = 5
 
 """
-def rewrite_dict(d: dict[str,int]) -> dict[str, int]:
+def crea_somma(d: dict[str, int]) -> int:
     somma: int = 0
-    d1: dict = d.copy()
     for key in d:
         somma += d[key]
-    
+    return somma
+
+def rewrite_dict(d: dict[str,int], somma: int) -> dict[str, int]:
+    d1: dict = d.copy()    
     for key in d1:
         d1[key] = d1[key] / somma
     
     return d1
 
 d: dict = {"ciao": 2, "hello": 3}
-d1: dict = rewrite_dict(d)
+d1: dict = rewrite_dict(d,crea_somma(d))
 print(f"Il dizionario normale è {d}, quello trasformato è {d1}")
