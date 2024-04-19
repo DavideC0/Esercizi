@@ -23,9 +23,31 @@ def subtract(x: float, y: float) -> float:
     s: float = x - y
     return s
 
+def mediana(lista: list):
+    lunghezza: int = len(lista)
+    lista.sort()
+    if lunghezza % 2 == 0: #in caso la lista è pari
+        lunghezza //= 2
+        print(lunghezza)
+        media: float = (lista[lunghezza] + lista[lunghezza-1]) / 2
+        return media
+    else: #in caso sia la lista è dispari
+        lunghezza //= 2
+        print(lunghezza)
+        media: float = lista[lunghezza]
+        return media
+
 d: dict = {"ciao": 2, "hello": 3}
 d1: dict = rewrite_dict(d,crea_somma(d))
 print(f"Il dizionario normale è {d}, quello trasformato è {d1}")
 x, y = 10.4, 5.8
 sottrazione: float = subtract(x,y)
 print(f"La sottrazione tra {x} e {y} è {sottrazione}")
+
+lista_pari:    list = [2,9,0,-1,25,2,4,3]
+lista_dispari: list = [2,9,0,-1,25,2,4]
+
+mediana_pari: float = mediana(lista_pari)
+mediana_dispari: float = mediana(lista_dispari)
+
+print(f"La mediana della lista pari ordinata è {mediana_pari}, invece la mediana della lista dispari ordinata è {mediana_dispari}")
