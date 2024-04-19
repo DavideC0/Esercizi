@@ -36,6 +36,12 @@ def mediana(lista: list):
         print(lunghezza)
         media: float = lista[lunghezza]
         return media
+    
+def differenza_cumulativa(lista: list) -> float:
+    differenza: float = lista[0]
+    for i in range(len(lista)-1):
+        differenza -= lista[i+1]
+    return differenza
 
 d: dict = {"ciao": 2, "hello": 3}
 d1: dict = rewrite_dict(d,crea_somma(d))
@@ -51,3 +57,8 @@ mediana_pari: float = mediana(lista_pari)
 mediana_dispari: float = mediana(lista_dispari)
 
 print(f"La mediana della lista pari ordinata è {mediana_pari}, invece la mediana della lista dispari ordinata è {mediana_dispari}")
+
+lista_differenza: list = [1,2,3,4,5,6]
+
+differenza: float = differenza_cumulativa(lista_differenza)
+print(f"La differenza comulativa di della lista {lista_differenza} è {differenza}")
