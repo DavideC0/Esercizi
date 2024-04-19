@@ -12,7 +12,7 @@ def crea_somma(d: dict[str, int]) -> int:
         somma += d[key]
     return somma
 
-def rewrite_dict(d: dict[str,int], somma: int) -> dict[str, int]:
+def rewrite_dict(d: dict[str,int], somma: int) -> dict[str, float]:
     d1: dict = d.copy()    
     for key in d1:
         d1[key] = d1[key] / somma
