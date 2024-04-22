@@ -32,8 +32,8 @@ def is_palindrome(parola):
     parola = parola.replace(" ", "")
     lunghezza = len(parola)
     
-    for i in range(lunghezza // 2):
-        if parola[i] != parola[lunghezza - i - 1]:
+    for i in range(lunghezza // 2): #è necessario controllare solo metà della lista/stringa
+        if parola[i] != parola[lunghezza - i - 1]: #se non trova gli stessi caratteri esce dalla funzione e ritorna falseS
             return False
     return True
 
@@ -47,7 +47,7 @@ print(occorrenze_parole)
 dizionario_filtrato: dict = filtro_occorrenze(occorrenze_parole)
 print(dizionario_filtrato)
 
-parola = "anna"
+parola = "amo roma"
 if is_palindrome(parola):
     print(f"{parola} è un palindromo")
 else:
