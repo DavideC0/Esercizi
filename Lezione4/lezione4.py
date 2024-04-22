@@ -59,6 +59,22 @@ def subtract_all(lista: list, y: float) -> list:
         differenza.append(lista[i] - y)
     return differenza
 
+def subtract_list_to_list(lista1: list, lista2: list) -> list:
+    lista1_fun: list = lista1.copy()
+    lista2_fun: list = lista2.copy()
+    lista_risultato: list = []
+    if len(lista1_fun) == len(lista2_fun):
+        for i in range(len(lista1_fun)):
+            lista_risultato.append(lista1_fun[i] - lista2_fun[i])
+    elif len(lista1_fun) > len(lista2_fun):
+        for i in range(len(lista2_fun)):
+            lista_risultato.append(lista1_fun[i] - lista2_fun[i])
+    else: 
+        for i in range(len(lista1_fun)):
+            lista_risultato.append(lista1_fun[i] - lista2_fun[i])
+        
+    return lista_risultato
+
 d: dict = {"ciao": 2, "hello": 3}
 d1: dict = rewrite_dict(d,crea_somma(d))
 print(f"Il dizionario normale è {d}, quello trasformato è {d1}")
@@ -87,3 +103,8 @@ sub: float = 4
 
 differenza_sub: list = subtract_all(lista_differenza_sub, sub)
 print(f"La sottrazione sulla lista {lista_differenza} con il sottratore {sub} è {differenza_sub}")
+
+l1: list = [1,2,3,4,8]
+l2: list = [2,3,4,5,6 ]
+output: list = subtract_list_to_list(l1,l2)
+print(f"Il risultato della sottrazione della lista {l1} e la lista {l2} è {output}")
