@@ -53,6 +53,12 @@ def differenza_cumulativa_index(lista: list, index: int) -> float:
     else:
         print("L'indice inserito non è valido")
 
+def subtract_all(lista: list, y: float) -> list:
+    differenza: list = []
+    for i in range(len(lista)):
+        differenza.append(lista[i] - y)
+    return differenza
+
 d: dict = {"ciao": 2, "hello": 3}
 d1: dict = rewrite_dict(d,crea_somma(d))
 print(f"Il dizionario normale è {d}, quello trasformato è {d1}")
@@ -75,3 +81,9 @@ print(f"La differenza comulativa di della lista {lista_differenza} è {differenz
 index: int = 3
 differenza_index: float = differenza_cumulativa_index(lista_differenza, index)
 print(f"La differenza cumulativa indice scelto della lista {lista_differenza} è {differenza_index}")
+
+lista_differenza_sub: list = [1,2,3,4,5,6]
+sub: float = 4
+
+differenza_sub: list = subtract_all(lista_differenza_sub, sub)
+print(f"La sottrazione sulla lista {lista_differenza} con il sottratore {sub} è {differenza_sub}")
