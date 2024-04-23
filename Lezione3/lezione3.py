@@ -43,3 +43,13 @@ for i in range(1, 11):
 #4-9
 lista_10_cubi: list = [i**3 for i in range(1, 11)]
 print(f"Stampo la lista dei cubi da 1 10 {lista_10_cubi}")
+
+#4-10
+lista_slice: list = []
+middle: int = len(one_milion) // 2
+middle_1: int = middle + 2
+middle_2: int = middle - 1
+lista_slice.extend(pizza[:3])
+lista_slice.extend(one_milion[middle_2:middle_1])
+lista_slice.extend(lista_10_cubi[-3:])
+print(lista_slice)
