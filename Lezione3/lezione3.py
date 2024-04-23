@@ -10,7 +10,7 @@ for i in range(len(animali)):
 
 #4-3
 print("Numeri da 1 a 20 incluso")
-for i in range(21):
+for i in range(1, 21):
     print(i)
 
 #4-4
@@ -24,3 +24,8 @@ massimo: int = max(one_milion)
 minimo: int = min(one_milion)
 somma: int = sum(one_milion)
 print(f"Il massimo della lista è {massimo}, il minimo è {minimo} infine la somma di tutti gli eleenti è {somma}")
+
+#4-6
+print("Stampo solo i numeri dispari da 1 a 20")
+for i in range(1, 21, 2):
+ print(i)
