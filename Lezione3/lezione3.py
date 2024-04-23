@@ -71,3 +71,10 @@ print("Is car == 'subaru'? I predict True")
 print(car == 'subaru')
 print("Is car == 'audi'? I predict False")
 print(car == 'audi')
+
+#5-3
+colore_alieno: str = "blu"
+print("il colore è verde")
+print(colore_alieno is "verde")
+print("il colore è blu")
+print(colore_alieno is "blu")
