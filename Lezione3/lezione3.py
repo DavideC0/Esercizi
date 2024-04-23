@@ -53,3 +53,14 @@ lista_slice.extend(pizza[:3])
 lista_slice.extend(one_milion[middle_2:middle_1])
 lista_slice.extend(lista_10_cubi[-3:])
 print(lista_slice)
+
+#4-11
+friend_pizza: list = pizza.copy()
+pizza.append("patatine e wurstel")
+friend_pizza.append("focaccia")
+print("Le mie pizze preferite sono")
+for i in range(len(pizza)):
+   print(pizza[i])
+print("Le pizze preferite dei miei amici sono")
+for i in range(len(pizza)):
+   print(friend_pizza[i])
