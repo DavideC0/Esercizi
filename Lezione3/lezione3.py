@@ -29,3 +29,8 @@ print(f"Il massimo della lista è {massimo}, il minimo è {minimo} infine la som
 print("Stampo solo i numeri dispari da 1 a 20")
 for i in range(1, 21, 2):
  print(i)
+
+ #4-7
+ print("Stampo la tabelillina del 3")
+ for i in range(3, 31, 3):
+    print(i)
