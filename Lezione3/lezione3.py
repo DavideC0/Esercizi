@@ -37,5 +37,9 @@ for i in range(1, 21, 2):
 
 #4-8
 print("Stampo i cubi da 1 a 10")
-for i in range(1, 10):
+for i in range(1, 11):
    print(i**3)
+
+#4-9
+lista_10_cubi: list = [i**3 for i in range(1, 11)]
+print(f"Stampo la lista dei cubi da 1 10 {lista_10_cubi}")
