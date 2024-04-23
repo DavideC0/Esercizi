@@ -12,3 +12,9 @@ for i in range(len(animali)):
 print("Numeri da 1 a 20 incluso")
 for i in range(21):
     print(i)
+
+#4-4
+one_milion: list = []
+for i in range(10000000):
+    one_milion.append(i)
+print("Stampare tutto impiegherebbe troppo tempo, non lo farò")
