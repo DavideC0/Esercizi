@@ -15,6 +15,12 @@ for i in range(21):
 
 #4-4
 one_milion: list = []
-for i in range(10000000):
+for i in range(10000001):
     one_milion.append(i)
 print("Stampare tutto impiegherebbe troppo tempo, non lo farò")
+
+#4-5
+massimo: int = max(one_milion)
+minimo: int = min(one_milion)
+somma: int = sum(one_milion)
+print(f"Il massimo della lista è {massimo}, il minimo è {minimo} infine la somma di tutti gli eleenti è {somma}")
