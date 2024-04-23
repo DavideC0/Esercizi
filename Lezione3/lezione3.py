@@ -64,3 +64,10 @@ for i in range(len(pizza)):
 print("Le pizze preferite dei miei amici sono")
 for i in range(len(pizza)):
    print(friend_pizza[i])
+
+#5-1
+car: str = 'subaru'
+print("Is car == 'subaru'? I predict True")
+print(car == 'subaru')
+print("Is car == 'audi'? I predict False")
+print(car == 'audi')
