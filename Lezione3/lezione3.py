@@ -7,3 +7,8 @@ for i in range(len(pizza)):
 animali: list = ["gatto", "cane", "coniglio"]
 for i in range(len(animali)):
     print(f"Il {animali[i]} è un ottimo animale")
+
+#4-3
+print("Numeri da 1 a 20 incluso")
+for i in range(21):
+    print(i)
