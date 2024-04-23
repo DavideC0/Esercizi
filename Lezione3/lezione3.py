@@ -34,3 +34,8 @@ for i in range(1, 21, 2):
  print("Stampo la tabelillina del 3")
  for i in range(3, 31, 3):
     print(i)
+
+#4-8
+print("Stampo i cubi da 1 a 10")
+for i in range(1, 10):
+   print(i**3)
