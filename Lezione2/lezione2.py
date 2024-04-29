@@ -73,3 +73,6 @@ print(f"stampa lista ordinata usando sort e reverse {location}")
 #3-9 Dinner Guests
 numero_partecipanti: int = len(copia_guest)
 print(f"stampa il numero di partecipaneti massimi alla cena {numero_partecipanti}")
+#6-1 Person
+informazioni: dict = {"first_name": "Davide", "last_name": "Calcagni", "age": 19, "city": "Roma"}
+print(f"stampa il dizionario {informazioni}")
