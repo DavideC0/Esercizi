@@ -48,6 +48,7 @@ guest_list.append("Veronica")
 for i in range(len(guest_list)):
     print(f"Ciao {guest_list[i]}, sei invitat al nuovo luogo x con un tavolo più grande")
 #3-7 Shrinking Guest List
+copia_guest: list = guest_list.copy()
 for i in range(len(guest_list)-2):
     deleted_guest: str = guest_list.pop(-i)
     print(f"Mi dispiace {deleted_guest}, ma non ci danno il tavolo in tempo, non venire pù")
@@ -69,3 +70,6 @@ location.sort()
 print(f"stampa lista usando sort: {location}")
 location.sort(reverse=True)
 print(f"stampa lista ordinata usando sort e reverse {location}")
+#3-9 Dinner Guests
+numero_partecipanti: int = len(copia_guest)
+print(f"stampa il numero di partecipaneti massimi alla cena {numero_partecipanti}")
