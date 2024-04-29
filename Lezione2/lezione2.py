@@ -76,3 +76,6 @@ print(f"stampa il numero di partecipaneti massimi alla cena {numero_partecipanti
 #6-1 Person
 informazioni: dict = {"first_name": "Davide", "last_name": "Calcagni", "age": 19, "city": "Roma"}
 print(f"stampa il dizionario {informazioni}")
+#6-2 Favorite Numbers
+numeri_preferiti: dict = {"Francesco": 10, "Giualiano": 89, "Luciano": 14, "Massimo": 22, "Giovanni": 67}
+print(f"stampa lista di persone e il loro numero preferito {numeri_preferiti}")
