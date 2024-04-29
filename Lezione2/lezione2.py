@@ -79,3 +79,9 @@ print(f"stampa il dizionario {informazioni}")
 #6-2 Favorite Numbers
 numeri_preferiti: dict = {"Francesco": 10, "Giualiano": 89, "Luciano": 14, "Massimo": 22, "Giovanni": 67}
 print(f"stampa lista di persone e il loro numero preferito {numeri_preferiti}")
+#6-3 Glossary
+glossario: dict = {"sort":"funzione che modifica il dizionario ordinandolo", "reverse": "funzione che modifica il dizionario invertendolo", "pop": "elimina un elemento di una lista dato un indice"}
+glossario_key: list = list(glossario.keys())
+glossario_value: list = list(glossario.values())
+for i in range(len(glossario)):
+    print(f"la funzione {glossario_key[i]} e fa: {glossario_value[i]}")
