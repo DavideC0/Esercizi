@@ -47,10 +47,12 @@ guest_list.insert(2, "Matteo")
 guest_list.append("Veronica")
 for i in range(len(guest_list)):
     print(f"Ciao {guest_list[i]}, sei invitat al nuovo luogo x con un tavolo più grande")
-#3-7
+#3-7 Shrinking Guest List
 for i in range(len(guest_list)-2):
     deleted_guest: str = guest_list.pop(-i)
     print(f"Mi dispiace {deleted_guest}, ma non ci danno il tavolo in tempo, non venire pù")
 for i in range(len(guest_list)):
     print(f"Ciao {guest_list[i]} non possono darci in tempo il tavolo più grande quindi saremo in meno, ma tu vieni lo stesso")
+for i in range(len(guest_list)):
+    del guest_list[0]
 print(f"Ecco la lista delle persone dopo aver eliminato tutti: {guest_list}")
