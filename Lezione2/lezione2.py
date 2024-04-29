@@ -56,3 +56,16 @@ for i in range(len(guest_list)):
 for i in range(len(guest_list)):
     del guest_list[0]
 print(f"Ecco la lista delle persone dopo aver eliminato tutti: {guest_list}")
+#3-8 Seeing the World
+location: list = ["milano","londra","taipei","dacca","parigi"]
+print(f"stampa lista non ordinata: {location}")
+print(f"stampa lista ordinata usando sorted: {sorted(location)}")
+print(f"stampa lista ordinata al contrario usando sorted: {sorted(location, reverse=True)}")
+location.reverse()
+print(f"stampa lista con ordine invertito: {location}")
+location.reverse()
+print(f"stampa lista rimessa apposto: {location}")
+location.sort()
+print(f"stampa lista usando sort: {location}")
+location.sort(reverse=True)
+print(f"stampa lista ordinata usando sort e reverse {location}")
