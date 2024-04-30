@@ -95,3 +95,14 @@ people.append(persone2)
 print("stampa valori in people")
 for i in range(len(people)):
     print(people[i])
+#6-8 Pets
+garfield: dict = {"tipo": "gatto", "nome padrone": "John"}
+hamtaro: dict = {"tipo": "criceto", "nome padrone": "Camilla"}
+destiny: dict = {"tipo": "cane","nome padrone": "Stefania"}
+pets: list = []
+pets.append(garfield)
+pets.append(hamtaro)
+pets.append(destiny)
+print("stampa valori in pets")
+for i in range(len(pets)):
+    print(pets[i])
