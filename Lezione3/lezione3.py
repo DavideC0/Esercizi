@@ -117,3 +117,12 @@ else:
             print(f"Ciao {users[i].capitalize()}, vuoi vedere lo stato del report?")
         else:
             print(f"Ciao {users[i].capitalize()}, bentornato nel login")
+
+#5-10 Checking Usernames
+current_users: list = users.copy()
+new_users: list = ["alfredo", "pippo", "jonno", "franco"]
+for i in range(len(new_users)):
+    if new_users[i].lower() in current_users:
+        print(f"L'username: {new_users[i].capitalize()} non è valido inseriscine un'altro")
+    else:
+        print(f"L'username: {new_users[i].capitalize()} è disponibile inserimento in corso...")
