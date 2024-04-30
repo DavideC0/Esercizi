@@ -1,5 +1,6 @@
 #Davide Calcagni
 #18/04/2024
+import random
 
 print("Hello World")
 #2-3 Personal Message
@@ -106,3 +107,10 @@ pets.append(destiny)
 print("stampa valori in pets")
 for i in range(len(pets)):
     print(pets[i])
+#6-9  Favorite Places
+amici: list = ["Timofte", "Cătălina", "Ștefania"]
+lista_luoghi: list = ["Roma", "Tropea", "Napoli", "Firenze", "Frosinone", "Campobasso"]
+luoghi_preferiti: dict = {}
+for i in range(len(amici)):
+    luoghi_preferiti[amici[i]] = lista_luoghi[random.randint(0, 5)]
+print(f"stampa lista luoghi preferiti con la persona \n {luoghi_preferiti}")
