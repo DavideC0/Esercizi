@@ -126,3 +126,18 @@ for i in range(len(new_users)):
         print(f"L'username: {new_users[i].capitalize()} non è valido inseriscine un'altro")
     else:
         print(f"L'username: {new_users[i].capitalize()} è disponibile inserimento in corso...")
+
+#5-11 Ordinal Numbers
+numeri: list = []
+for i in range(1, 10):
+    numeri.append(i)
+for i in range(len(numeri)):
+    if numeri[i] == 1:
+        fine = "st"
+    elif numeri[i] == 2:
+        fine = "nd"
+    elif numeri[i] == 3:
+        fine = "rd"
+    else:
+        fine = "th"
+    print(f"{numeri[i]}{fine}")
