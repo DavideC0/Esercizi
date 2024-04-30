@@ -114,3 +114,9 @@ luoghi_preferiti: dict = {}
 for i in range(len(amici)):
     luoghi_preferiti[amici[i]] = lista_luoghi[random.randint(0, 5)]
 print(f"stampa lista luoghi preferiti con la persona \n {luoghi_preferiti}")
+#6-10 Favorite Numbers
+lista_persone: list = list(numeri_preferiti.keys())
+dizionario_persone_numeri: dict = {}
+for i in range(len(lista_persone)):
+    dizionario_persone_numeri[lista_persone[i]] = input(f"inserisci i numeri preferiti di {lista_persone[i]} (separati da virgole): ").split(",")
+print(f"stampo il dizionario con le persone i loro numeri preferiti\n{dizionario_persone_numeri} ")
