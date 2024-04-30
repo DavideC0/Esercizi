@@ -117,6 +117,28 @@ print(f"stampa lista luoghi preferiti con la persona \n {luoghi_preferiti}")
 #6-10 Favorite Numbers
 lista_persone: list = list(numeri_preferiti.keys())
 dizionario_persone_numeri: dict = {}
-for i in range(len(lista_persone)):
-    dizionario_persone_numeri[lista_persone[i]] = input(f"inserisci i numeri preferiti di {lista_persone[i]} (separati da virgole): ").split(",")
-print(f"stampo il dizionario con le persone i loro numeri preferiti\n{dizionario_persone_numeri} ")
+#for i in range(len(lista_persone)):
+    #dizionario_persone_numeri[lista_persone[i]] = input(f"inserisci i numeri preferiti di {lista_persone[i]} (separati da virgole): ").split(",")
+#print(f"stampo il dizionario con le persone i loro numeri preferiti\n{dizionario_persone_numeri} ")
+#6-11 Cities
+cities = {
+    "Tokyo": {
+        "country": "Japan",
+        "population": "approximately 37.4 million",
+        "fact": "Tokyo is the most populous metropolitan area in the world."
+    },
+    "New York City": {
+        "country": "United States",
+        "population": "approximately 8.4 million",
+        "fact": "New York City is often referred to as 'The Big Apple'."
+    },
+    "London": {
+        "country": "United Kingdom",
+        "population": "approximately 9.3 million",
+        "fact": "London is home to the world's oldest underground railway, known as the Tube."
+    }
+}
+for city, info in cities.items():
+    print(f"\n{city}:")
+    for key, value in info.items():
+        print(f"{key}: {value}")
