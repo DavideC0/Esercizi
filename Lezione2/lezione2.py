@@ -85,3 +85,13 @@ glossario_key: list = list(glossario.keys())
 glossario_value: list = list(glossario.values())
 for i in range(len(glossario)):
     print(f"la funzione {glossario_key[i]} e fa: {glossario_value[i]}")
+#6-7 People
+persone1: dict = {"Maria": "ha i capelli lunghi", "Pietro": "lavora in tribunale", "Claudio": "è un comico"}
+persone2: dict = {"Spider-Man": "fa il super eroe", "Peter": "è un persona qualunque", "Batman": "cerca giustizia"}
+people: list = []
+people.append(informazioni)
+people.append(persone1)
+people.append(persone2)
+print("stampa valori in people")
+for i in range(len(people)):
+    print(people[i])
