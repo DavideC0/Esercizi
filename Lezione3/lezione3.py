@@ -80,18 +80,29 @@ print("il colore è blu")
 print(colore_alieno is "blu")
 
 #5-6 Stages of life
-age: int = int(input("Inserisci l'età di una persona: "))
-if age < 0:
-   print("La persona non può avere un'età negativa")
-elif age < 2:
-   print("La persona è un neonato")
-elif 4 > age >= 2:
-    print("La persona è un bambino che fa i primi passi")
-elif 13 > age >= 4:
-    print("La persona è un bambino")
-elif 20 > age >= 13:
-    print("La persona è un adolescente")
-elif 65 > age >= 20:
-   print("La persona è un adulto")
-elif age > 65:
-   print("la persona è un anziano")
+try:
+    age: int = int(input("Inserisci l'età di una persona: "))
+    if age < 0:
+        print("La persona non può avere un'età negativa")
+    elif age < 2:
+        print("La persona è un neonato")
+    elif 4 > age >= 2:
+        print("La persona è un bambino che fa i primi passi")
+    elif 13 > age >= 4:
+        print("La persona è un bambino")
+    elif 20 > age >= 13:
+        print("La persona è un adolescente")
+    elif 65 > age >= 20:
+        print("La persona è un adulto")
+    elif age > 65:
+        print("la persona è un anziano")
+except:
+   print("hai scritto qualcosa che non è un numero intero")
+
+#5-7 Favorite Fruit
+frutti_preferiti: list = ["mela", "arancia", "pesca"]
+check: str = input("inserisci un frutto e controllerò se si trova nella lista: ").lower()
+if check in frutti_preferiti:
+   print(f"{check} si trova nella lista dei frutti")
+else:
+   print(f"{check} non si trova nella lista dei frutti")
