@@ -106,3 +106,11 @@ if check in frutti_preferiti:
    print(f"{check} si trova nella lista dei frutti")
 else:
    print(f"{check} non si trova nella lista dei frutti")
+
+#5-8 Hello Admin
+users: list = ["admin", "john", "franco", "pippo"]
+for i in range(len(users)):
+    if users[i] == "admin":
+        print(f"Ciao {users[i].capitalize()}, vuoi vedere lo stato del report?")
+    else:
+        print(f"Ciao {users[i].capitalize()}, bentornato nel login")
