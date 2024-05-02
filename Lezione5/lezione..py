@@ -6,16 +6,17 @@ def create_playllist() -> dict:
             break
         except:
             print("Il valore inserito non è valido")
-    playlist: list = []
+    playlist: dict = {}
     for i in range(num_song):
         song: str = str(input("Inserisci il nome della canzone desidera: "))
-        playlist.append(song)
+        playlist.update({song: "liked = True"})
     dplaylist: dict = {}
     dplaylist[name_playlist] = playlist
 
     return dplaylist
 
-def add_favorite():
+def add_favorite(playlist: dict) -> dict:
+
     pass
 
 print(create_playllist())
