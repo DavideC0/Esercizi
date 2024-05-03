@@ -35,14 +35,27 @@ def visit_tree(tree: dict[int,list[int]], node: int):
         visit_tree(tree, right_child)
 
 def visit_tree_iterative(tree: dict[int, list[int]], root: int):
-    stack: list[int] = [root]
+    stack: list[int] = [root, 0]
+    avg_for_level: dict[int,float] = {}
+    nodes_for_level = {}
     while stack:
-        curr_node = stack.pop()
-        if curr_node:
-            print(curr_node)
-            left_child, right_child = tree.get(curr_node, [None, None])
+        curr_node, curr_level = stack.pop(0)
+        
+        nodes_for_level[curr_level] = nodes_for_level.get(curr_level,0) + 1
+
+        left_child, right_child = tree.get(curr_node, [None, None])
+
+        if left_child:
+            stack.append(left_child, curr_level + 1)
+            avg_for_level[curr_level] = avg_for_level.get(curr_level, 0) + left_child
+        if right_child:
             stack.append(right_child)
-            stack.append(left_child)
+            avg_for_level[curr_level] = avg_for_level.get(curr_level, 0) + right_child
+    
+    for level in avg_for_level:
+        avg_for_level[level] /= nodes_for_level[level]
+
+    return avg_for_level
 
 tree = {4:[3,5], 3:[2,None], 5:[4.5,6], 2:[None,None], 4.5:[None,None], 6:[None,None]}
-visit_tree_iterative(tree, 4)
+print(visit_tree_iterative(tree, 4))
