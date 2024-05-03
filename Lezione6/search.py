@@ -34,5 +34,15 @@ def visit_tree(tree: dict[int,list[int]], node: int):
     if right_child:
         visit_tree(tree, right_child)
 
+def visit_tree_iterative(tree: dict[int, list[int]], root: int):
+    stack: list[int] = [root]
+    while stack:
+        curr_node = stack.pop()
+        if curr_node:
+            print(curr_node)
+            left_child, right_child = tree.get(curr_node, [None, None])
+            stack.append(right_child)
+            stack.append(left_child)
+
 tree = {4:[3,5], 3:[2,None], 5:[4.5,6], 2:[None,None], 4.5:[None,None], 6:[None,None]}
-visit_tree(tree,4)
+visit_tree_iterative(tree, 4)
