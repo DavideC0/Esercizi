@@ -23,8 +23,13 @@ class Menu:
             repr += food.__str__() + "\n"
         return repr
 
-    def add_food(self, food):
-        self.list_food.append(food)
+    def add_food(self, food: Food):
+        count: int = 0
+        for i in range(len(self.list_food)):
+            if food.name == self.list_food[i].name:
+                count += 1
+        if count == 0:
+            self.list_food.append(food)
     
     def remove_food(self, food) -> None:
         if food in self.list_food:
@@ -42,12 +47,14 @@ class Menu:
 pizza = Food("Pizza", 10, "wurstel e patatine")
 pasta = Food("Pasta", 7.90, "pasta cruda")
 zuppa = Food("Zuppa", 20.50, "la good zuppa")
+zuppa2 = Food("Zuppa", 20.50, "la good zuppa")
 
 menu = Menu()
 
 menu.add_food(pizza)
 menu.add_food(pasta)
 menu.add_food(zuppa)
+menu.add_food(zuppa2)
 
 print(f"Lista prezzi: {menu.get_prices()}")
 print(f"Media dei prezzi: {menu.get_avg_price()}")
