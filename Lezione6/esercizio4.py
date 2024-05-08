@@ -28,6 +28,7 @@ class Menu:
         for i in range(len(self.list_food)):
             if food.name == self.list_food[i].name:
                 count += 1
+                self.list_food[i].price = food.price
         if count == 0:
             self.list_food.append(food)
     
