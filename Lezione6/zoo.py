@@ -7,6 +7,7 @@ class Animal:
         self.width = width
         self.preferred_habitat = preferred_habitat
         self.health: float = 100 * (1/self.age)
+        self.recinto: Fence|None = None
     
     def calcolo_area(self):
         return self.height * self.width
@@ -49,14 +50,41 @@ class ZooKeeper:
         self.id = id
     
     def add_animal(self, animal: Animal, fence: Fence):
+        """
+        consente al guardiano dello zoo di aggiungere un nuovo animale allo zoo. 
+        L'animale deve essere collocato in un recinto adeguato in base alle esigenze del suo habitat 
+        e se c'è ancora spazio nel recinto, 
+        ovvero se l'area del recinto è ancora sufficiente per ospitare questo animale.
+        """
         if animal.preferred_habitat == fence.habitat and fence.area >= animal.calcolo_area():
             if animal not in fence.lista_animali:
                 fence.add(animal)
+                animal.recinto = fence
     
     def remove_animal(self, animal: Animal, fence: Fence):
+        """
+        consente al guardiano dello zoo di rimuovere un animale dallo zoo. L'animale deve essere allontanato dal suo recinto. 
+        Nota bene: L'area del recinto deve essere ripristinata dello spazio che l'animale rimosso occupava.
+        """
         if animal in fence.lista_animali:
             fence.lista_animali.remove(animal)
             fence.area += animal.calcolo_area()
+    
+    def feed(self, animal: Animal):
+        """
+        implementa un metodo che consenta al guardiano dello zoo di nutrire tutti gli animali dello zoo. 
+        Ogni volta che un animale viene nutrito, la sua salute incrementa di 1% rispetto alla sua salute corrente, 
+        ma le dimensioni dell'animale (height e width) vengono incrementate del 2%. Perciò, 
+        l'animale si può nutrire soltanto se il recinto ha ancora spazio a sufficienza per ospitare l'animale ingrandito dal cibo.
+        """
+        height_maggiore: float = animal.height * (2/100) + animal.height
+        width_maggiore: float = animal.width * (2/100) + animal.width
+        area_maggiore: float = height_maggiore * width_maggiore
+        area_differenza: float = area_maggiore - animal.calcolo_area()
+        if area_differenza <= animal.recinto.area:
+            animal.height = height_maggiore
+            animal.width = width_maggiore
+            animal.health = animal.health * (1/100) + animal.health
 
 class Zoo:
     def __init__(self) -> None:
@@ -93,3 +121,10 @@ print(recinto)
 lorenzo.remove_animal(cane,recinto_vuoto) #tenta di rimuovere il cane ma non funziona perchè fa parte del recinto
 print(recinto) #ristampa ciò che è nel recinto è uguale 
 print(recinto_vuoto) #stampa ciò che è nel secondo recito e non cambia
+
+#test feed
+print(lupo)# pre time skip
+lorenzo.feed(lupo)# aggiunge massa
+print(lupo) #post time skip
+lorenzo.add_animal(lupo,recinto)#prova ad aggiungerlo ma fallisce
+print(recinto)#controlla se l'aggiunge
