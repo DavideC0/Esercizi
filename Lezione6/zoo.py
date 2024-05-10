@@ -96,7 +96,7 @@ class ZooKeeper:
         """
         if fence.area == 0:
             return fence.area_tot
-        time: float = (fence.area_tot - fence.area) / fence.area
+        return (fence.area_tot - fence.area) / fence.area
         
         
 
@@ -142,3 +142,7 @@ lorenzo.feed(lupo)# aggiunge massa
 print(lupo) #post time skip
 lorenzo.add_animal(lupo,recinto)#prova ad aggiungerlo ma fallisce
 print(recinto)#controlla se l'aggiunge
+
+#test clean
+print(lorenzo.clean(recinto))
+print(lorenzo.clean(recinto_vuoto))
