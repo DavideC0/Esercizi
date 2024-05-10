@@ -28,6 +28,7 @@ class Fence:
         self.temperature = temperature
         self.habitat = habitat
         self.lista_animali: list[Animal] = []
+        self.area_tot = area
 
     def add(self, animal: Animal) -> None:
         self.lista_animali.append(animal)
@@ -74,8 +75,8 @@ class ZooKeeper:
         """
         implementa un metodo che consenta al guardiano dello zoo di nutrire tutti gli animali dello zoo. 
         Ogni volta che un animale viene nutrito, la sua salute incrementa di 1% rispetto alla sua salute corrente, 
-        ma le dimensioni dell'animale (height e width) vengono incrementate del 2%. Perciò, 
-        l'animale si può nutrire soltanto se il recinto ha ancora spazio a sufficienza per ospitare l'animale ingrandito dal cibo.
+        ma le dimensioni dell'animale (height e width) vengono incrementate del 2%. 
+        Perciò, l'animale si può nutrire soltanto se il recinto ha ancora spazio a sufficienza per ospitare l'animale ingrandito dal cibo.
         """
         height_maggiore: float = animal.height * (2/100) + animal.height
         width_maggiore: float = animal.width * (2/100) + animal.width
@@ -85,6 +86,19 @@ class ZooKeeper:
             animal.height = height_maggiore
             animal.width = width_maggiore
             animal.health = animal.health * (1/100) + animal.health
+    
+    def clean(self, fence: Fence) -> float:
+        """
+         implementare un metodo che consenta al guardiano dello zoo di pulire tutti i recinti dello zoo. 
+         Questo metodo restituisce un valore di tipo float che indica il tempo che il guardiano impiega per pulire il recinto. 
+         Il tempo di pulizia è il rapporto dell'area occupata dagli animali diviso l'area residua del recinto. 
+         Se l'area residua è pari a 0, restituire l'area occupata.
+        """
+        if fence.area == 0:
+            return fence.area_tot
+        time: float = (fence.area_tot - fence.area) / fence.area
+        
+        
 
 class Zoo:
     def __init__(self) -> None:
