@@ -52,6 +52,11 @@ class ZooKeeper:
         if animal.preferred_habitat == fence.habitat and fence.area >= animal.calcolo_area():
             if animal not in fence.lista_animali:
                 fence.add(animal)
+    
+    def remove_animal(self, animal: Animal, fence: Fence):
+        if animal in fence.lista_animali:
+            fence.lista_animali.remove(animal)
+            fence.area += animal.calcolo_area()
 
 class Zoo:
     def __init__(self) -> None:
@@ -63,13 +68,11 @@ lorenzo = ZooKeeper("Lorenzo", "Maggi", 1234)
 recinto = Fence(100,25,"Continental")
 recinto_vuoto = Fence(100,25,"dinosauri")
 
-print(recinto)
-
 lupo = Animal("giovanni","blb", 10, 5, 5,"Continental")
 cavallo = Animal('pietro','palle', 20, 10, 5, 'Continental')
 gatto = Animal('adrian','savona', 20, 10, 10, 'dinosauri')
 cane = Animal('nicola','ltimat-piderma', 20, 25, 1, 'Continental')
-
+#test add
 lorenzo.add_animal(lupo,recinto)
 print(f"recinto 1 {recinto.print_area()}") #75 primo
 lorenzo.add_animal(cavallo,recinto)
@@ -83,3 +86,10 @@ lorenzo.add_animal(gatto,recinto_vuoto)
 print(f"recinto 2 {recinto_vuoto.print_area()}") #0 secondo
 lorenzo.add_animal(lupo,recinto_vuoto)
 print(f"recinto 2 {recinto_vuoto.print_area()}") #0 non entra secondo
+
+#test remove
+lorenzo.remove_animal(lupo,recinto) #rimuove il lupo dal recinto
+print(recinto)
+lorenzo.remove_animal(cane,recinto_vuoto) #tenta di rimuovere il cane ma non funziona perchè fa parte del recinto
+print(recinto) #ristampa ciò che è nel recinto è uguale 
+print(recinto_vuoto) #stampa ciò che è nel secondo recito e non cambia
