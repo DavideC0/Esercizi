@@ -13,13 +13,7 @@ class Animal:
         return self.height * self.width
     
     def __str__(self) -> str:
-        return (f"Name: {self.name} "
-                f"Species: {self.species} "
-                f"Age: {self.age} "
-                f"Height: {self.height} "
-                f"Width: {self.width} "
-                f"Preferred Habitat: {self.preferred_habitat} "
-                f"Health: {self.health}")
+        return f"Animal(name={self.name}, species={self.species}, age={self.age})\n"
 
 
 class Fence:
@@ -35,10 +29,11 @@ class Fence:
         self.area -= animal.calcolo_area()
 
     def __str__(self) -> str:
+        print(f"Fence(area={self.area}, temperature={self.temperature}, habitat={self.habitat})\n")
         repr: str = ""
         for animal in self.lista_animali:
             repr += animal.__str__() + "\n"
-        repr += f"area = {self.area} temperatura = {self.temperature} habitat = {self.habitat}"
+        repr += '#' * 30 + "\n"
         return repr
     
     def print_area(self) -> str:
@@ -97,13 +92,34 @@ class ZooKeeper:
         if fence.area == 0:
             return fence.area_tot
         return (fence.area_tot - fence.area) / fence.area
+    
+    def __str__(self) -> str:
+        return f"ZooKeeper(name={self.nome}, surname={self.cognome}, id={self.id})\n"
         
-        
-
 class Zoo:
     def __init__(self) -> None:
         self.lista_recinti: list[Fence] = []
         self.lista_guardiani: list[ZooKeeper] = []
+
+    def add_fence(self, fence: Fence) -> None:
+        if fence not in self.lista_recinti:
+            self.lista_recinti.append(fence)
+    
+    def add_guardian(self, guardian: ZooKeeper) -> None:
+        if guardian not in self.lista_guardiani:
+            self.lista_guardiani.append(guardian)
+
+    def describe_zoo(self) -> None:
+        """
+        visualizza informazioni su tutti i guardani dello zoo, 
+        sui recinti dello zoo che contengono animali. 
+        """
+        print('Guardians:\n')
+        for i in range(len(self.lista_guardiani)):
+            print(self.lista_guardiani[i])
+        print('Fences:\n')
+        for i in range(len(self.lista_recinti)):
+            print(self.lista_recinti[i])
 
 lorenzo = ZooKeeper("Lorenzo", "Maggi", 1234)
 
@@ -114,7 +130,7 @@ lupo = Animal("giovanni","blb", 10, 5, 5,"Continental")
 cavallo = Animal('pietro','palle', 20, 10, 5, 'Continental')
 gatto = Animal('adrian','savona', 20, 10, 10, 'dinosauri')
 cane = Animal('nicola','ltimat-piderma', 20, 25, 1, 'Continental')
-recinto_test = Fence(10000,50,"vuoto") # creto un recinto che deve rimanere vuoto per altri test
+recinto_test = Fence(10000,50,"vuoto") # creato un recinto che deve rimanere vuoto per altri test
 #test add
 lorenzo.add_animal(lupo,recinto)
 print(f"recinto 1 {recinto.print_area()}") #75 primo
@@ -149,4 +165,12 @@ print(recinto)#controlla se l'aggiunge
 #test clean
 print(lorenzo.clean(recinto)) #provato il clean su un recito non completamente pieno
 print(lorenzo.clean(recinto_vuoto)) # provato il clean su un recinto pieno
-print(lorenzo.clean(recinto_test)) #provato quando è completamente vuoto e ritorna 0 da chiedere
+print(lorenzo.clean(recinto_test)) #provato quando è completamente vuoto e ritorna 0
+
+#test describe zoo
+zoo = Zoo()
+zoo.add_fence(recinto)
+zoo.add_fence(recinto_vuoto)
+zoo.add_fence(recinto_test)
+zoo.add_guardian(lorenzo)
+zoo.describe_zoo()
