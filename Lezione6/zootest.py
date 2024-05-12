@@ -87,7 +87,7 @@ class ZooKeeper:
             animal.width = width_maggiore
             animal.health = animal.health * (1/100) + animal.health
     
-    def clean(self, fence: Fence) -> float:
+    def clean(self, fence: Fence) -> float: #chiedere se la formula è giusta
         """
          implementare un metodo che consenta al guardiano dello zoo di pulire tutti i recinti dello zoo. 
          Questo metodo restituisce un valore di tipo float che indica il tempo che il guardiano impiega per pulire il recinto. 
@@ -114,6 +114,7 @@ lupo = Animal("giovanni","blb", 10, 5, 5,"Continental")
 cavallo = Animal('pietro','palle', 20, 10, 5, 'Continental')
 gatto = Animal('adrian','savona', 20, 10, 10, 'dinosauri')
 cane = Animal('nicola','ltimat-piderma', 20, 25, 1, 'Continental')
+recinto_test = Fence(10000,50,"vuoto") # creto un recinto che deve rimanere vuoto per altri test
 #test add
 lorenzo.add_animal(lupo,recinto)
 print(f"recinto 1 {recinto.print_area()}") #75 primo
@@ -135,6 +136,8 @@ print(recinto)
 lorenzo.remove_animal(cane,recinto_vuoto) #tenta di rimuovere il cane ma non funziona perchè fa parte del recinto
 print(recinto) #ristampa ciò che è nel recinto è uguale 
 print(recinto_vuoto) #stampa ciò che è nel secondo recito e non cambia
+lorenzo.remove_animal(cavallo,recinto_test) #tenta la rimozione di un animale in un recinto vuoto
+print(recinto_test) #test pper controllare se è tutto ok
 
 #test feed
 print(lupo)# pre time skip
@@ -144,5 +147,6 @@ lorenzo.add_animal(lupo,recinto)#prova ad aggiungerlo ma fallisce
 print(recinto)#controlla se l'aggiunge
 
 #test clean
-print(lorenzo.clean(recinto))
-print(lorenzo.clean(recinto_vuoto))
+print(lorenzo.clean(recinto)) #provato il clean su un recito non completamente pieno
+print(lorenzo.clean(recinto_vuoto)) # provato il clean su un recinto pieno
+print(lorenzo.clean(recinto_test)) #provato quando è completamente vuoto e ritorna 0 da chiedere
