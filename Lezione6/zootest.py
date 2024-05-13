@@ -13,7 +13,7 @@ class Animal:
         return self.height * self.width
     
     def __str__(self) -> str:
-        return f"Animal(name={self.name}, species={self.species}, age={self.age})\n"
+        return f"Animal(name={self.name}, species={self.species}, age={self.age})"
 
 
 class Fence:
@@ -29,11 +29,11 @@ class Fence:
         self.area -= animal.calcolo_area()
 
     def __str__(self) -> str:
-        print(f"Fence(area={self.area}, temperature={self.temperature}, habitat={self.habitat})\n")
+        print(f"Fence(area={self.area}, temperature={self.temperature}, habitat={self.habitat})")
         repr: str = ""
         for animal in self.lista_animali:
             repr += animal.__str__() + "\n"
-        repr += '#' * 30 + "\n"
+        repr += '#' * 30
         return repr
     
     def print_area(self) -> str:
@@ -82,7 +82,7 @@ class ZooKeeper:
             animal.width = width_maggiore
             animal.health = animal.health * (1/100) + animal.health
     
-    def clean(self, fence: Fence) -> float: #chiedere se la formula è giusta
+    def clean(self, fence: Fence) -> float:
         """
          implementare un metodo che consenta al guardiano dello zoo di pulire tutti i recinti dello zoo. 
          Questo metodo restituisce un valore di tipo float che indica il tempo che il guardiano impiega per pulire il recinto. 
@@ -94,7 +94,7 @@ class ZooKeeper:
         return (fence.area_tot - fence.area) / fence.area
     
     def __str__(self) -> str:
-        return f"ZooKeeper(name={self.nome}, surname={self.cognome}, id={self.id})\n"
+        return f"ZooKeeper(name={self.nome}, surname={self.cognome}, id={self.id})"
         
 class Zoo:
     def __init__(self) -> None:
@@ -114,10 +114,10 @@ class Zoo:
         visualizza informazioni su tutti i guardani dello zoo, 
         sui recinti dello zoo che contengono animali. 
         """
-        print('Guardians:\n')
+        print('Guardians:')
         for i in range(len(self.lista_guardiani)):
             print(self.lista_guardiani[i])
-        print('Fences:\n')
+        print('Fences:')
         for i in range(len(self.lista_recinti)):
             print(self.lista_recinti[i])
 
