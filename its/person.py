@@ -12,6 +12,7 @@ class Student(Person):
         super().__init__(cf, name, surname, age)
         self.id: str = id
         self.group = None
+        self.interests: list[str] = []
         
     def withdraw(self) -> bool:
         if self.group:
@@ -19,6 +20,12 @@ class Student(Person):
                 self.group = None
                 return True
         return False
+    
+    def add_interest(self, interest: str):
+        self.interests.append(interest)
+        
+    def get_interests(self) -> list[str]:
+        return self.interests
     
     def __str__(self) -> str:
         return f'Student(id={self.id}, cf={self.cf}, name={self.name}'\

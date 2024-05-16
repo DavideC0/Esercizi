@@ -1,3 +1,4 @@
+from materials.material_abstract import AbstractLesson
 from person import Professor, Student
 
 class Group:
@@ -7,6 +8,7 @@ class Group:
         self.limit_students: int = limit_students
         self.students: list[Student] = []
         self.professors: list[Professor] = []
+        self.materials: list[AbstractLesson] = []
     
     def add_student(self, student: Student) -> bool:
         if student not in self.students and self.get_limit_students() > 0:
@@ -28,6 +30,9 @@ class Group:
             self.professors.append(professor)
             return True
         return False
+    
+    def add_material(self, lesson: AbstractLesson):
+        self.materials.append(lesson)
             
     def get_limit_professors(self) -> int:
         return max(len(self.students) // 10, 1)
@@ -46,4 +51,7 @@ class Group:
         s += "With Professors:\n"
         for prof in self.professors:
             s += prof.__str__() + "\n"
+        s += "With Lessons:\n"
+        for lesson in self.materials:
+            s += lesson.__str__() + "\n"
         return s[:-1]
