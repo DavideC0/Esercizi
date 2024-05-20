@@ -29,12 +29,20 @@ class Users:
         self.cognome = cognome
         self.residenza = residenza
         self.età = età
+        self.tentativi_login: int = 0
     
     def describe_user(self) -> str:
         return f"nome = {self.nome} cognome = {self.cognome} residenza = {self.residenza} età = {self.età}"
     
     def greet_user(self) -> str:
         return f"benvenuto {self.cognome} {self.nome}, cosa desideri fare?"
+    
+    def increment_login_attemps(self) -> None:
+        self.tentativi_login += 1
+
+    def reset_login_attempts(self) -> None:
+        self.tentativi_login = 0
+
 davide = Users("Davide", "Calcagni", "Roma", 19)
 maffo = Users("Andrea", "Maffei", "Castel Giubileo", 20)
 print(davide.describe_user())
@@ -49,3 +57,11 @@ print(ristorante.numb_served)
 for i in range(5):
     ristorante.increment_number_served()
 print(ristorante.numb_served)
+
+#9-5 Login Attempts
+print(maffo.tentativi_login)
+for i in range(5):
+    maffo.increment_login_attemps()
+print(maffo.tentativi_login)
+maffo.reset_login_attempts()
+print(maffo.tentativi_login)
