@@ -65,3 +65,18 @@ for i in range(5):
 print(maffo.tentativi_login)
 maffo.reset_login_attempts()
 print(maffo.tentativi_login)
+
+#9-6 Ice Cream Stand
+class IceCreamStand(Restaurant):
+    def __init__(self, nome: str, tipo_cucina: str, sapori: list[str]) -> None:
+        self.sapori: list[str] = sapori
+        super().__init__(nome, tipo_cucina)
+
+    def display_flavors(self):
+        repr: str = ""
+        for i in range(len(self.sapori)):
+            repr += self.sapori[i] + "\n"
+        return repr
+    
+gelateria = IceCreamStand("o' scampia o' vesuvio", "gelateria", ["ciccolato", "fior di latte", "nocciola"])
+print(gelateria.display_flavors())
