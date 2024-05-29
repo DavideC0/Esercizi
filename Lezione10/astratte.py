@@ -1,4 +1,5 @@
 from abc import ABC, abstractclassmethod
+from typing import Any
 
 class abcAnimal(ABC):
     
@@ -27,10 +28,11 @@ class Coccodrillo(abcAnimal):
     def verso(self):
         print(f"roar?")
 
+a: dict[str,str|int] = {'key1': 'val1', 'key2': 'val2', 'key3': 3}
 
-cane1 = Cane('pluto')
-gatto1 = Gatto('silvestro')
-Coccodrillo1 = Coccodrillo('Giovanni')
+cane1:Cane = Cane('pluto')
+gatto1:Gatto = Gatto('silvestro')
+Coccodrillo1:Coccodrillo = Coccodrillo('Giovanni')
 
 cane1.verso()
 gatto1.verso()
