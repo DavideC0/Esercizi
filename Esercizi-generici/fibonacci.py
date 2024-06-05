@@ -11,7 +11,18 @@ def fibonacci(numero: int):
         memoria.append(risultato)
     return memoria
 
+def fibonacci3(numero: int):
+    a = 1
+    b = 1
+    for i in range(1, numero):
+        c = a + b
+        a = b
+        b = c
+    return a
+
 n=10
 print(sequenza(n))
 
-print(fibonacci(100))
+#print(fibonacci(10))
+
+print(fibonacci3(10000))
