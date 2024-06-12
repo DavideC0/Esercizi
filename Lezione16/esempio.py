@@ -20,3 +20,7 @@ with open("esempio.txt") as reader:
         print(f"{line} - number: {line_counter}")
         line = reader.readline()
         line_counter += 1
+        
+with open("esempioCorto.txt", "a") as reader:
+    l = ["ciao sono flavio\n", "ciao sono maria\n", "ciao sono luca\n"]
+    reader.writelines(l)
