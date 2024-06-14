@@ -33,7 +33,7 @@ class Dottore(Persona):
     def getParcella(self) -> float:
         return self.__parcella
     
-    def isValid(self) -> None:
+    def isValid(self) -> bool:
         if self.getEtà() >= 30:
             print(f"Il dottore {self.getNome()} {self.getCognome()} ha più di 30 anni quindi è valido")
             return True
