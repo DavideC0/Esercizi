@@ -35,8 +35,28 @@ class Rettangolo(Forma):
             render += "*" + " " * (self.base - 2) + "*\n"
         render += "*" * self.base
         return render
+    
+class Triangolo(Forma):
+    def __init__(self, base: int, altezza: int) -> None:
+        self.base: int = base
+        self.altezza: int = altezza
+        
+    def getArea(self):
+        return self.base * self.altezza
+    
+    def render(self):
+        render: str = "*\n"
+        temp: int
+        for i in range(self.altezza -2):
+            render += "*" +  " " * i + "*\n"
+        render += "*" * self.base
+        return render
+            
+        
         
 quadrato: Quadrato = Quadrato(4)
 print(quadrato.render())
 rettangolo: Rettangolo = Rettangolo(base = 8, altezza = 4)
 print(rettangolo.render())
+triangolo: Triangolo = Triangolo(base=4, altezza=4)
+print(triangolo.render())
