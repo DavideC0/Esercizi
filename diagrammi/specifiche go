@@ -1,0 +1,3 @@
+Indirizzo [A-Za-z]+ [0-9A-Za-z]+ [0-9]+
+Regole {giapponesi, cinesi}
+Komi 0<=Reale<=10
