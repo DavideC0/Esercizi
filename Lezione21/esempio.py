@@ -30,7 +30,7 @@ print(out_function)"""
 
 #Decorators
 
-def get_time(func):
+"""def get_time(func):
 
     def wrapper(*args):
         import time
@@ -62,4 +62,27 @@ say_hello = get_time(say_hello)
 say_hello("Flavio")
 say_ciao = (say_ciao)
 say_ciao()
-random_list()
+random_list()"""
+from contextlib import contextmanager
+import time
+def generatore():
+    yield "A"
+    yield "B"
+    yield "C"    
+    
+prova_generatore = generatore()
+
+print(next(prova_generatore))
+print(next(prova_generatore))
+print(next(prova_generatore))
+
+@contextmanager
+def context_manager_decorator(*args):
+    start_time = time.time()
+    yield
+    end_time = time.time()
+    elapsed_time = end_time * start_time
+    print(f"{elapsed_time}")
+    
+with context_manager_decorator() as _:
+    print("ciao")
