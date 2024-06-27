@@ -63,7 +63,10 @@ say_hello("Flavio")
 say_ciao = (say_ciao)
 say_ciao()
 random_list()"""
-from contextlib import contextmanager
+
+#context manager decorator
+
+"""from contextlib import contextmanager
 import time
 def generatore():
     yield "A"
@@ -85,4 +88,24 @@ def context_manager_decorator(*args):
     print(f"{elapsed_time}")
     
 with context_manager_decorator() as _:
-    print("ciao")
+    print("ciao")"""
+    
+#thread
+import time
+lista_thread: list = []
+def funzione(id: int):
+    print(f"{id} time {time.time()}")
+    time.sleep(1.5)
+    print(f"{id} time {time.time()}")
+    
+if __name__ == "__main__":
+    import threading
+    for id in range(3):
+        x = threading.Thread(target=funzione, args=(id,))
+        lista_thread.append(x)
+        print(f"Prima di runnare il thread {time.time()}")
+        x.start()
+        print(f"Ho runnato il thread {time.time()}")
+
+for t in lista_thread:
+    t.join()
