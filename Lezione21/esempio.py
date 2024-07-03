@@ -1,5 +1,5 @@
 #first class objects
-"""def say_hello(name:str)->None:
+def say_hello(name:str)->None:
     print(f"Hello, {name}")
 
 def say_ciao(name:str)->None:
@@ -8,11 +8,12 @@ def say_ciao(name:str)->None:
 def saluta(func):
     func("Flavio")
 
+print(f'First class objects')
 saluta(say_hello)
-saluta(say_ciao)"""
+saluta(say_ciao)
 
 #inner functions
-"""def parent():
+def parent():
     print(f"Sono in parent")
 
     def first_child():
@@ -25,12 +26,13 @@ saluta(say_ciao)"""
     first_child()
     return second_child
 
+print(f'Inner functions')
 out_function = parent()
-print(out_function)"""
+print(out_function)
 
 #Decorators
 
-"""def get_time(func):
+def get_time(func):
 
     def wrapper(*args):
         import time
@@ -58,21 +60,23 @@ def random_list(upper_bound: int):
     sleep_time = random.randint(0, upper_bound)
     time.sleep(sleep_time)
 
+print('Decorators')
 say_hello = get_time(say_hello)
 say_hello("Flavio")
 say_ciao = (say_ciao)
 say_ciao()
-random_list()"""
+random_list(10)
 
 #context manager decorator
 
-"""from contextlib import contextmanager
+from contextlib import contextmanager
 import time
 def generatore():
     yield "A"
     yield "B"
     yield "C"    
     
+print(f'Context manaher decarator')
 prova_generatore = generatore()
 
 print(next(prova_generatore))
@@ -88,7 +92,7 @@ def context_manager_decorator(*args):
     print(f"{elapsed_time}")
     
 with context_manager_decorator() as _:
-    print("ciao")"""
+    print("ciao")
     
 #thread
 import time
@@ -98,14 +102,14 @@ def funzione(id: int):
     time.sleep(1.5)
     print(f"{id} time {time.time()}")
     
-if __name__ == "__main__":
-    import threading
-    for id in range(3):
-        x = threading.Thread(target=funzione, args=(id,))
-        lista_thread.append(x)
-        print(f"Prima di runnare il thread {time.time()}")
-        x.start()
-        print(f"Ho runnato il thread {time.time()}")
+print('Thread')
+import threading
+for id in range(3):
+    x = threading.Thread(target=funzione, args=(id,))
+    lista_thread.append(x)
+    print(f"Prima di runnare il thread {time.time()}")
+    x.start()
+    print(f"Ho runnato il thread {time.time()}")
 
 for t in lista_thread:
     t.join()
