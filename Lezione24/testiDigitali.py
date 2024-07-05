@@ -41,3 +41,6 @@ class Email(Documento):
     def getText(self) -> str:
         return f"Da: {self.get_mittente()} A: {self.get_destinatario()}\nTitolo: {self.get_titolo()}\nMessaggio: {super().getText()}"
     
+    def writeToFile(self, directory: str) -> None:
+        with open(directory, "a") as appender:
+            appender.write(self.getText())
