@@ -38,3 +38,6 @@ class Email(Documento):
     def set_titolo(self, titolo: str) -> None:
         self.titolo = titolo
         
+    def getText(self) -> str:
+        return f"Da: {self.get_mittente()} A: {self.get_destinatario()}\nTitolo: {self.get_titolo()}\nMessaggio: {super().getText()}"
+    
