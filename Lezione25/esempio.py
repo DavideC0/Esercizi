@@ -1,11 +1,8 @@
-from multiprocessing import Process
-import time
-
 def bubble_sort_v2():
 
     from random import randint
     
-    x = [randint(0, 10000) for _ in range(5000000)]
+    x = [randint(0, 10000) for _ in range(50000000)]
     
     ho_fatto_swap: bool = True
     for i in range(len(x)):
