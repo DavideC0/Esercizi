@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from math import ceil
 
 class CodificatoreMessaggio(ABC):
     @abstractmethod
@@ -40,15 +39,30 @@ class CifratoreACombinazione(CodificatoreMessaggio, DecodificatoreMessaggio):
         self.chiave = chiave
     
     def codifica(self, testoInChiaro: str) -> str:
-        metà = ceil(len(testoInChiaro)/2)
-        
+        codificato = self.apoggio(testoInChiaro)
+        print(codificato)
+        for _ in range(self.chiave):
+            codificato = self.apoggio(codificato)
+            print(codificato)
+        return codificato
+    
+    def apoggio(self, codifica):
+        metà = len(codifica)//2
+        codificato = ""
+        for i in range(metà):
+            codificato += codifica[i] + codifica[metà + i]
+        return codificato
     
     def decodifica(self, testoCodificato: str) -> str:
-        return super().decodifica(testoCodificato)        
+        metà = len(testoCodificato//2)
+        decodificato = ""      
         
-c = CifratoreAScorrimento(5000)
+c = CifratoreAScorrimento(4000)
 
-pippo = c.codifica("Ciao, come stai?")
+"""pippo = c.codifica("Ciao, come stai?")
 oppip = c.decodifica(pippo)
 print(pippo)
-print(oppip)
+print(oppip)"""
+
+walter = CifratoreACombinazione(3)
+gianno = walter.codifica("Ciao, come stai?")
