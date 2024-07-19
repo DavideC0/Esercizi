@@ -29,21 +29,21 @@ class VoloCommerciale(Volo):
             if self.prenotazioni_economica + posti <= self.posti_economica:
                 self.prenotazioni_economica += posti
                 self.prenotazioni += posti
-                return f"Sono stati prenotati {posti} nella classe economica"
+                return f"Sono stati prenotati {posti} nella classe economica, codice volo: {self.codice}"
             else:
                 return f"Non ci sono abbastanza posti disponili"
         elif classe_servizio == 'business':
             if self.prenotazioni_business + posti <= self.posti_business:
                 self.prenotazioni_business += posti
                 self.prenotazioni += posti
-                return f"Sono stati prenotati {posti} nella classe business"
+                return f"Sono stati prenotati {posti} nella classe business, codice volo: {self.codice}"
             else:
                 return f"Non ci sono abbastanza posti disponili"
         elif classe_servizio == 'prima':
             if self.prenotazioni_prima + posti <= self.posti_prima:
                 self.prenotazioni_prima += posti
                 self.prenotazioni += posti
-                return f"Sono stati prenotati {posti} nella classe business"
+                return f"Sono stati prenotati {posti} in prima classe, codice volo: {self.codice}"
             else:
                 return f"Non ci sono abbastanza posti disponili"
         else:
@@ -55,3 +55,18 @@ class VoloCommerciale(Volo):
                 'classe business': self.posti_business - self.prenotazioni_business,
                 'prima classe': self.posti_prima - self.prenotazioni_prima
                 }
+
+class VoloCharter(Volo):
+    def __init__(self, codice: str, capacità: int, costo: float) -> None:
+        super().__init__(codice, capacità)
+        self.costo: float = costo
+    
+    def prenota_posto(self):
+        if self.prenotazioni == 0:
+            self.prenotazioni = self.capacità
+            return f"Prenotazione del volo charter con codice {self.codice} è andata a buon fine, il prezzo pagato è {self.costo}"
+        else:
+            return f"Il volo charter con codice {self.codice} è già stato prenotato"
+    
+    def posti_disponibili(self):
+        return f"I posti disponibili sono {self.capacità-self.prenotazioni}"
