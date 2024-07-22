@@ -1,8 +1,3 @@
-import unittest
-
-i: int = 0
-assert i == 0, f"The value must be equal to 0 instead is {i}!"
-
 class Calculations:
     def __init__(self, a: float, b: float) -> None:
         self.a: float = a
