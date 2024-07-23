@@ -57,3 +57,18 @@ class Moto(Veicolo):
         
     def descrivi_veicolo(self):
         print(f"Marca: {self.marca}, Modello: {self.modello}, Anno: {self.anno}, Tipo: {self.tipo}")
+        
+def merge_dictionaries(dict1: dict, dict2: dict) -> dict:
+    dict_result: dict[str:int] = {}
+    for key, value in dict1.items():
+        if key in dict_result:
+            dict_result[key] += value
+        else:
+            dict_result[key] = value
+            
+    for key, value in dict2.items():
+        if key in dict_result:
+            dict_result[key] += value
+        else:
+            dict_result[key] = value  
+    return dict_result    
