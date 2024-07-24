@@ -213,3 +213,12 @@ def transform(x: int) -> int:
         return x / 2
     else:
         return x * 3 - 1
+
+def frequency_dict(elements: list) -> dict:
+    dizionario = {}
+    for element in elements:
+        if element in dizionario:
+            dizionario[element] += 1
+        else:
+            dizionario[element] = 1
+    return dizionario
