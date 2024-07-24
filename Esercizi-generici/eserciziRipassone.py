@@ -207,3 +207,9 @@ def check_access(username: str, password, is_active: bool) -> str:
         return 'Accesso consentito'
     else:
         return 'Accesso negato'
+    
+def transform(x: int) -> int:
+    if x % 2 == 0:
+        return x / 2
+    else:
+        return x * 3 - 1
