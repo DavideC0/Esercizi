@@ -222,3 +222,10 @@ def frequency_dict(elements: list) -> dict:
         else:
             dizionario[element] = 1
     return dizionario
+
+def sum_above_threshold(numbers: list[int], bound: int) -> int:
+    s: int = 0
+    for i in numbers:
+        if i > bound:
+            s += i
+    return s
