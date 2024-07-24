@@ -201,3 +201,9 @@ def check_combination(conditionA: bool, conditionB: bool, conditionC: bool) -> s
         return "Operazione permessa"
     else:
         return "Operazione negata"
+    
+def check_access(username: str, password, is_active: bool) -> str:
+    if username == 'admin' and password == '12345' and is_active:
+        return 'Accesso consentito'
+    else:
+        return 'Accesso negato'
