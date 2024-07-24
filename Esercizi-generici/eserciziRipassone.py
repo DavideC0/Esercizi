@@ -77,4 +77,39 @@ def trova_chiave_per_valore(dizionario: dict[str: int], valore: int) -> str:
     for key, value in dizionario.items():
         if value == valore:
             return key
-    return None    
+    return None
+
+class RecipeManager:
+    def __init__(self) -> None:
+        self.recipes: dict[str:list[str]] = {}
+
+    def create_recipe(self, name, ingredients):
+        self.recipes[name] = ingredients
+        return self.recipes
+
+    def add_ingredient(self, recipe_name, ingredient):
+        self.recipes[recipe_name].append(ingredient)
+        return self.recipes
+
+    def remove_ingredient(self, recipe_name, ingredient):
+        self.recipes[recipe_name].remove(ingredient)
+        return self.recipes
+    
+    def update_ingredient(self, recipe_name, old_ingredient, new_ingredient):
+        i = self.recipes[recipe_name].index(old_ingredient)
+        self.remove_ingredient(recipe_name, old_ingredient)
+        self.recipes[recipe_name].insert(i, new_ingredient)
+        return self.recipes
+
+    def list_recipes(self):
+        return list(self.recipes.keys())
+    
+    def list_ingredients(self, recipe_name):
+        return self.recipes[recipe_name]
+    
+    def search_recipe_by_ingredient(self, ingredient):
+        dizionario = {}
+        for key, value in self.recipes.items():
+            if ingredient in value:
+                dizionario[key] = value
+        return dizionario
