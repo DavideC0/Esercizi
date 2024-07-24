@@ -71,4 +71,10 @@ def merge_dictionaries(dict1: dict, dict2: dict) -> dict:
             dict_result[key] += value
         else:
             dict_result[key] = value  
-    return dict_result    
+    return dict_result
+
+def trova_chiave_per_valore(dizionario: dict[str: int], valore: int) -> str:
+    for key, value in dizionario.items():
+        if value == valore:
+            return key
+    return None    
