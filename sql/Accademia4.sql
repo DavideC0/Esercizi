@@ -8,11 +8,13 @@ where posizione = 'Ricercatore'
 --3. Quali sono i Professori Associati il cui cognome comincia con la lettera ‘V’ ?
 select nome, cognome
 from Persona 
-where posizione = 'Professore Associato' and cognome like 'V%'
+where posizione = 'Professore Associato' 
+    and cognome like 'V%'
 --4. Quali sono i Professori (sia Associati che Ordinari) il cui cognome comincia con la lettera ‘V’ ?
 select nome, cognome
 from Persona 
-where (posizione = 'Professore Associato' or posizione = 'Professore Ordinario') and cognome like 'V%'
+where (posizione = 'Professore Associato' or posizione = 'Professore Ordinario') 
+    and cognome like 'V%'
 --5. Quali sono i Progetti già terminati alla data odierna?
 select *
 from Progetto 
