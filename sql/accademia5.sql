@@ -22,3 +22,38 @@ where p.id = a1.persona
 	and pr.nome = 'Pegasus'
 	and a1.giorno <> a2.giorno
 	and a1.persona = a2.persona
+
+-- 4. Quali sono il nome, il cognome e la posizione dei Professori Ordinari che hanno
+-- fatto almeno una assenza per malattia?
+select distinct p.nome, p.cognome, p.posizione
+from Persona p, Assenza a
+where p.id = a.persona
+	and p.posizione = 'Professore Ordinario'
+	and a.tipo = 'Malattia'
+
+-- 5. Quali sono il nome, il cognome e la posizione dei Professori Ordinari che hanno
+-- fatto più di una assenza per malattia?
+select distinct p.nome, p.cognome, p.posizione
+from Persona p, Assenza a1, Assenza a2
+where p.id = a1.persona
+	and p.posizione = 'Professore Ordinario'
+	and a1.tipo = 'Malattia'
+    and a1.persona = a2.persona
+    and a1.giorno <> a2.giorno
+
+-- 6. Quali sono il nome, il cognome e la posizione dei Ricercatori che hanno almeno
+-- un impegno per didattica?
+select distinct p.nome, p.cognome, p.posizione
+from Persona p, AttivitaNonProgettuale a
+where p.id = a.persona
+	and p.posizione = 'Ricercatore'
+	and a.tipo = 'Didattica'
+
+-- 8. Quali sono il nome e il cognome degli strutturati che nello stesso giorno hanno sia
+-- attività progettuali che attività non progettuali?
+select distinct p.nome, p.cognome, p.posizione
+from Persona p, AttivitaNonProgettuale anp, AttivitaProgetto ap
+where p.id = anp.persona
+	and p.id = ap.persona
+	and anp.persona = ap.persona
+	and anp.giorno = ap.giorno 
