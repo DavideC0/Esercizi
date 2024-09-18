@@ -1,0 +1,25 @@
+Specifica Use-case Registrazione
+
+
+nuovo_utente(cf:CodiceFiscale, nome:Stringa, cognome:Stringa) : Utente
+	pre: non esiste u:Utente t.c. u.cf = cf
+	post:
+		Viene creato e restuito un nuovo oggetto result:Utente t.c.:
+			- result.cf = cf
+			- result.nome = nome
+			- result.cognome = cognome
+99.2. Gli utenti registrati devono poter:
+     99.2.1 prenotare uno o più posti fornendo: tipologia di tariffa, l'evento	
+			
+prenota(tipo_tariffa: TipologiaTariffa, nome_evento: Evento, posto: Posto) : Prenotazione
+	pre:
+		posto non deve far parte di nessun link con oggetti di classe PrePosto
+	post:
+		viene creato e restituito un nuovo oggetto result:Prenotazione tale che:
+			viene creato il link tra result e nome_evento dell'associazione even_pren | viene creato (nome_evento, result):even_pren
+			viene creato l'oggetto prp della classe Preposto
+			viene creato (prp, posto): posto_assegnato
+			viene creato (result, prp): pren_prep
+			viene creato (tipo_tariffa, prp): tipo_tariffa_posto
+			result.istante è l'istante corrente
+
