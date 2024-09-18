@@ -56,4 +56,15 @@ from Persona p, AttivitaNonProgettuale anp, AttivitaProgetto ap
 where p.id = anp.persona
 	and p.id = ap.persona
 	and anp.persona = ap.persona
-	and anp.giorno = ap.giorno 
+	and anp.giorno = ap.giorno
+
+-- 9. Quali sono il nome e il cognome degli strutturati che nello stesso giorno hanno sia
+-- attività progettuali che attività non progettuali? Si richiede anche di proiettare il
+-- giorno, il nome del progetto, il tipo di attività non progettuali e la durata in ore di entrambe le attività.
+select distinct p.nome, p.cognome, ap.giorno, pr.nome, ap.oreDurata, anp.tipo, anp.oreDurata
+from Persona p, AttivitaNonProgettuale anp, AttivitaProgetto ap, Progetto pr
+where p.id = anp.persona
+	and p.id = ap.persona
+	and anp.persona = ap.persona
+	and anp.giorno = ap.giorno
+	and ap.progetto = pr.id
