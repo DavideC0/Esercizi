@@ -31,12 +31,12 @@ def process_pkt(pkt):
         if exists("log.csv"):
             with open("log.csv", "a", newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow([datetime.now().strftime('%d-%m-%Y %H:%M:%S'), pkt[IP].src, pkt[TCP].sport, pkt[IP].dst, pkt[TCP].dport, protocol])
+                writer.writerow([datetime.now().strftime('%d-%m-%Y %H:%M:%S'), pkt[IP].src, pkt[TCP].sport, pkt[IP].dst, pkt[TCP].dport, host, protocol])
         else:
             with open("log.csv", "w", newline='') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(["datetime", "src", "sport", "dst", "dport", "host"])
-                writer.writerow([datetime.now(), pkt[IP].src, pkt[TCP].sport, pkt[IP].dst, pkt[TCP].dport, protocol])    
+                writer.writerow(["datetime", "src", "sport", "dst", "dport", "host", "protocol"])
+                writer.writerow([datetime.now(), pkt[IP].src, pkt[TCP].sport, pkt[IP].dst, pkt[TCP].dport, host, protocol])    
         
 sniff(iface="eth0", filter="tcp port 80 or tcp port 443", prn=process_pkt)
 
