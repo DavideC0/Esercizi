@@ -1,4 +1,4 @@
--- 1. Quali sono il nome, la data di inizio e la data di fine dei WP del progetto di nome‘Pegasus’ ?
+-- 1. Quali sono il nome, la data di inizio e la data di fine dei WP del progetto di nome ‘Pegasus’ ?
 select *
 from WP wp, Progetto p
 where p.nome = 'Pegasus'
@@ -68,3 +68,21 @@ where p.id = anp.persona
 	and anp.persona = ap.persona
 	and anp.giorno = ap.giorno
 	and ap.progetto = pr.id
+
+-- 10. Quali sono il nome e il cognome degli strutturati che nello stesso giorno sono
+-- assenti e hanno attività progettuali?
+select p.nome, p.cognome
+from Persona p, AttivitaProgetto ap, Assenza a
+where p.id = ap.persona
+	and p.id = a.persona
+	and ap.giorno = a.giorno
+
+-- 11. Quali sono il nome e il cognome degli strutturati che nello stesso giorno sono
+-- assenti e hanno attività progettuali? Si richiede anche di proiettare il giorno, il
+-- nome del progetto, la causa di assenza e la durata in ore della attività progettuale
+select p.nome, p.cognome, ap.giorno, a.tipo, pg.nome, ap.oreDurata
+from Persona p, AttivitaProgetto ap, Assenza a, Progetto pg
+where p.id = ap.persona
+	and p.id = a.persona
+	and pg.id = ap.progetto
+	and ap.giorno = a.giorno
