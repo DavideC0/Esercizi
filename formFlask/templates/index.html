@@ -1,12 +1,15 @@
 <html>
     <head>
-        <title>form flask</title>
+        <title>Inserimento nome e congnome</title>
     </head>
     <body>
-        <form method='GET' action='/ciao'>
+        <h1>Inserisci il tuo nome e cognome<h1>
+        <form method='GET' action='/visualizza'>
             <label for="nome">Nome:</label>
             <input type="text" name="nome">
-            <input type="submit">Inserisci
+            <label for="cognome">Cognome:</label>
+            <input type="text" name="cognome">
+            <input type="submit" value="Inserisci">
         </form>
     </body>
 </html>
