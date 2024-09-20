@@ -86,3 +86,10 @@ where p.id = ap.persona
 	and p.id = a.persona
 	and pg.id = ap.progetto
 	and ap.giorno = a.giorno
+
+-- 12. Quali sono i WP che hanno lo stesso nome, ma appartengono a progetti diversi?
+SELECT wp1.name, wp1.project_id, wp2.project_id
+FROM WP wp1, WP wp2
+WHERE wp1.name = wp2.name
+AND wp1.project_id <> wp2.project_id
+GROUP BY wp1.name, wp1.project_id, wp2.project_id;
