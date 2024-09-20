@@ -88,8 +88,7 @@ where p.id = ap.persona
 	and ap.giorno = a.giorno
 
 -- 12. Quali sono i WP che hanno lo stesso nome, ma appartengono a progetti diversi?
-SELECT wp1.name, wp1.project_id, wp2.project_id
+SELECT distinct wp1.nome, wp1.id, wp2.id
 FROM WP wp1, WP wp2
-WHERE wp1.name = wp2.name
-AND wp1.project_id <> wp2.project_id
-GROUP BY wp1.name, wp1.project_id, wp2.project_id;
+WHERE wp1.nome = wp2.nome
+AND wp1.progetto <> wp2.progetto
