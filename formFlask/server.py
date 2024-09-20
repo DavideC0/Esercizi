@@ -8,6 +8,10 @@ utenti = [["mario", "password1", "m", "0"], ["gianni", "password2", "m", "0"]]
 def index():
     return render_template('index.html')
 
+@api.route('/home', methods=['GET'])
+def home():
+    return render_template('home.html')
+
 @api.route('/visualizza', methods=['GET'])
 def visualizza():
     nome = request.args.get('nome')
