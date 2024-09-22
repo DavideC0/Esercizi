@@ -50,3 +50,14 @@ where a.codice = la.aeroporto
 	and c.nome = a.comp
 	and c.comp = 'MagicFly'
 
+-- 9. Quali sono i voli che partono da un qualunque aeroporto della città di ‘Roma’ e
+-- atterrano ad un qualunque aeroporto della città di ‘New York’? Restituire: codice
+-- del volo, nome della compagnia, e aeroporti di partenza e arrivo.
+select v.codice, v.comp, v.DurataMinuti
+from Volo v, ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
+where v.codice = ap.codice and v.comp = ap.comp
+	and ap.partenza = la1.aeroporto
+	and ap.arrivo = la2.aeroporto
+	and la1.aeroporto <> la2.aeroporto
+	and la1.citta = 'Roma'
+	and la2.citta = 'New York'
