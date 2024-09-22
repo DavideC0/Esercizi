@@ -61,3 +61,11 @@ where v.codice = ap.codice and v.comp = ap.comp
 	and la1.aeroporto <> la2.aeroporto
 	and la1.citta = 'Roma'
 	and la2.citta = 'New York'
+
+-- 11. Quali sono le compagnie che hanno voli che partono dall’aeroporto ‘FCO’, 
+-- atterrano all’aeroporto ‘JFK’, e di cui si conosce l’anno di fondazione?
+select v.comp
+from Volo v, ArrPart ap, Compagnia c
+where v.codice = ap.codice and v.comp = ap.comp and v.comp = c.nome
+	and ap.partenza = 'FCO' and ap.arrivo = 'JFK'
+	and c.annoFondaz IS NOT NULL
