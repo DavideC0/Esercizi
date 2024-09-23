@@ -9,29 +9,25 @@ from Volo
 where durataminuti > 180
 
 -- 3. Quali sono i voli (codice e nome della compagnia) che partono dall’aeroporto con codice ‘CIA’ ?
-select v.codice, v.comp
-from Volo v, Aeroporto a, ArrPart ap
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.partenza = 'CIA'
+select ap.codice, ap.comp
+from ArrPart ap
+where ap.partenza = 'CIA'
 
 -- 4. Quali sono le compagnie che hanno voli che arrivano all’aeroporto con codice ‘FCO’ ?
-select distinct v.comp
-from Volo v, Aeroporto a, ArrPart ap
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.arrivo = 'FCO'
+select distinct ap.comp
+from ArrPart ap
+where ap.arrivo = 'FCO'
 
 -- 5. Quali sono i voli (codice e nome della compagnia) che partono dall’aeroporto ‘FCO’
 -- e arrivano all’aeroporto ‘JFK’ ?
-select distinct v.codice, v.comp
-from Volo v, Aeroporto a, ArrPart ap
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.arrivo = 'JFK' and ap.partenza = 'FCO'
+select distinct ap.codice, ap.comp
+from ArrPart ap
+where ap.arrivo = 'JFK' and ap.partenza = 'FCO'
 
 -- 6. Quali sono le compagnie che hanno voli che partono dall’aeroporto ‘FCO’ e atterrano all’aeroporto ‘JFK’ ?
-select distinct v.comp
-from Volo v, Aeroporto a, ArrPart ap, LuogoAeroporto l
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.arrivo = 'JFK' and ap.partenza = 'FCO'
+select distinct ap.comp
+from ArrPart ap
+where ap.arrivo = 'JFK' and ap.partenza = 'FCO'
 
 -- 7. Quali sono i nomi delle compagnie che hanno voli diretti dalla città di ‘Roma’ alla città di ‘New York’ ?
 select distinct v.comp 
@@ -53,10 +49,9 @@ where a.codice = la.aeroporto
 -- 9. Quali sono i voli che partono da un qualunque aeroporto della città di ‘Roma’ e
 -- atterrano ad un qualunque aeroporto della città di ‘New York’? Restituire: codice
 -- del volo, nome della compagnia, e aeroporti di partenza e arrivo.
-select v.codice, v.comp, ap.partenza, ap.arrivo
-from Volo v, ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.partenza = la1.aeroporto
+select ap.codice, ap.comp, ap.partenza, ap.arrivo
+from ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
+where ap.partenza = la1.aeroporto
 	and ap.arrivo = la2.aeroporto
 	and la1.aeroporto <> la2.aeroporto
 	and la1.citta = 'Roma'
