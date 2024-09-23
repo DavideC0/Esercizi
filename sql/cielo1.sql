@@ -30,10 +30,9 @@ from ArrPart ap
 where ap.arrivo = 'JFK' and ap.partenza = 'FCO'
 
 -- 7. Quali sono i nomi delle compagnie che hanno voli diretti dalla città di ‘Roma’ alla città di ‘New York’ ?
-select distinct v.comp 
-from Volo v, ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
-where v.codice = ap.codice and v.comp = ap.comp
-	and ap.partenza = la1.aeroporto
+select distinct ap.comp 
+from ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
+where ap.partenza = la1.aeroporto
 	and ap.arrivo = la2.aeroporto
 	and la1.aeroporto <> la2.aeroporto
 	and la1.citta = 'Roma'
@@ -53,9 +52,21 @@ select ap.codice, ap.comp, ap.partenza, ap.arrivo
 from ArrPart ap, LuogoAeroporto la1, LuogoAeroporto la2
 where ap.partenza = la1.aeroporto
 	and ap.arrivo = la2.aeroporto
-	and la1.aeroporto <> la2.aeroporto
 	and la1.citta = 'Roma'
 	and la2.citta = 'New York'
+	
+-- 10. Quali sono i possibili piani di volo con esattamente un cambio (utilizzando solo
+-- voli della stessa compagnia) da un qualunque aeroporto della città di ‘Roma’ ad un
+-- qualunque aeroporto della città di ‘New York’ ? Restituire: nome della compagnia,
+-- codici dei voli, e aeroporti di partenza, scalo e arrivo.
+select ap1.comp, ap1.codice, ap1.partenza, ap1.arrivo as scalo, ap2.codice, ap2.arrivo
+from ArrPart ap1, ArrPart ap2, LuogoAeroporto la1, LuogoAeroporto la2
+where ap1.partenza = la1.aeroporto
+	and ap2.arrivo = la2.aeroporto
+	and la1.citta = 'Roma'
+	and la2.citta = 'New York'
+	and ap2.partenza = ap1.arrivo
+	and ap1.comp = ap2.comp
 
 -- 11. Quali sono le compagnie che hanno voli che partono dall’aeroporto ‘FCO’, 
 -- atterrano all’aeroporto ‘JFK’, e di cui si conosce l’anno di fondazione?

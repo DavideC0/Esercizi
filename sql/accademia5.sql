@@ -17,11 +17,12 @@ order by p.cognome desc
 -- una attività nel progetto ‘Pegasus’ ?
 select distinct p.nome, p.cognome, p.posizione, pr.nome
 from Persona p, AttivitaProgetto a1, AttivitaProgetto a2, Progetto pr
-where p.id = a1.persona
-	and a1.progetto = pr.id
-	and pr.nome = 'Pegasus'
-	and a1.giorno <> a2.giorno
+where a1.id <> a2.id
 	and a1.persona = a2.persona
+	and pr.id = a1.progetto
+	and pr.id = a2.progetto
+	and pr.nome = 'Pegasus'
+	and p.id = a1.persona
 
 -- 4. Quali sono il nome, il cognome e la posizione dei Professori Ordinari che hanno
 -- fatto almeno una assenza per malattia?
@@ -37,9 +38,9 @@ select distinct p.nome, p.cognome, p.posizione
 from Persona p, Assenza a1, Assenza a2
 where p.id = a1.persona
 	and p.posizione = 'Professore Ordinario'
-	and a1.tipo = 'Malattia'
     and a1.persona = a2.persona
-    and a1.giorno <> a2.giorno
+	and a1.tipo = 'Malattia'
+	and a2.tipo = 'Malattia'
 
 -- 6. Quali sono il nome, il cognome e la posizione dei Ricercatori che hanno almeno
 -- un impegno per didattica?
