@@ -21,7 +21,24 @@ def GetDatiCittadino():
 
 def GetCittadino():
     return input("Inserisci il codice fiscale della persona richiesta ")
-    
+
+def UpdateCittadino():
+    dati_da_modifcare = [None for _ in range(4)]
+    dati_da_modifcare[0] = input("Inserisci il codice fiscale della persona a cui vuoi modificarei i dati")
+    nome = input("Inserisci il nome modificato (Lascia vuoto per non cambiare) ")
+    cognome = input("Inserisci il cognome modificato (Lascia vuoto per non cambiare) ")
+    dataN = input("Inserisci la data di nascita modificata (Lascia vuoto per non cambiare) ")
+    if cognome:
+        dati_da_modifcare[1] = cognome
+    if dataN:
+        dati_da_modifcare[2] = dataN
+    if nome:
+        dati_da_modifcare[3] = nome
+    return dati_da_modifcare
+
+def DeleteCittadino():
+    return input("Inserisci il codice fiscale della persona da eliminare ")
+
 
 
 print("Operazioni disponibili:")
@@ -52,7 +69,26 @@ while(True):
             
         except:
             print("Problemi di comunicazione con il server, riprova più tardi")
-        
+    elif sOper == "3":
+        print("Richiesto cittadino")
+        api_url = base_url + "/update_cittadino"
+        jsonDataRequest = UpdateCittadino()
+        try:
+            response = requests.post(api_url,json=jsonDataRequest)
+            print(response.content)
+            
+        except:
+            print("Problemi di comunicazione con il server, riprova più tardi")
+    elif sOper == "4":
+        print("Richiesto cittadino")
+        api_url = base_url + "/delete_cittadino"
+        jsonDataRequest = DeleteCittadino()
+        try:
+            response = requests.post(api_url,json=jsonDataRequest)
+            print(response.content)
+            
+        except:
+            print("Problemi di comunicazione con il server, riprova più tardi")
     elif sOper=="5":
         print("Buona giornata!")
         sys.exit()

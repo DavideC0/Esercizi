@@ -42,6 +42,32 @@ def GestisciReadCittadino():
         return "Cittadino non trovato"
     else:
         return 'Content-Type not supported!'
+    
+@api.route('/update_cittadino', methods=['POST'])
+def GestisciUpdateCittadino():
+    content_type = request.headers.get('Content-Type')
+    print("Ricevuta chiamata " + content_type)
+    if (content_type == 'application/json'):
+        with open("user.json") as json_file:
+            cittadini = json.load(json_file)
+    
+        if request.json[0] not in cittadini:
+            return "Errore, codice fiscale non trovato"
+
+        for i in range(len(request.json) - 1):
+            if request.json[i+1]:
+                if i + 1 == 1:
+                    cittadini[request.json[0]]["cognome"] = request.json[i+1]
+                elif i + 1 == 2:
+                    cittadini[request.json[0]]["dataNascita"] = request.json[i+1]
+                elif i + 1 == 3:
+                    cittadini[request.json[0]]["nome"] = request.json[i+1]
+        with open("user.json", "w") as json_file:
+            json.dump(cittadini, json_file)
+        return "Modifica avvenuta con successo"        
+    else:
+        return 'Content-Type not supported!'
+
 
 
 api.run(host="127.0.0.1", port=8080)
