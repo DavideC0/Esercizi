@@ -68,6 +68,22 @@ def GestisciUpdateCittadino():
     else:
         return 'Content-Type not supported!'
 
-
+@api.route('/delete_cittadino', methods=['POST'])
+def GestisciDeleteCittadino():
+    content_type = request.headers.get('Content-Type')
+    print("Ricevuta chiamata " + content_type)
+    if (content_type == 'application/json'):
+        with open("user.json") as json_file:
+            cittadini = json.load(json_file)
+    
+        if request.json not in cittadini:
+            return "Errore, codice fiscale non trovato"
+        cittadini.pop(request.json)
+        with open("user.json", "w") as json_file:
+            json.dump(cittadini, json_file)
+            
+        return "Eliminazione avvenuta con successo"        
+    else:
+        return 'Content-Type not supported!'
 
 api.run(host="127.0.0.1", port=8080)
