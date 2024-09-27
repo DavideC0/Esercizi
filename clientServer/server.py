@@ -36,7 +36,10 @@ def GestisciReadCittadino():
     if (content_type == 'application/json'):
         with open("user.json") as json_file:
             cittadini = json.load(json_file)
-        return render_template("read.html", dati=cittadini)
+        for key, value in cittadini.items():
+            if request.json == key:
+                return cittadini[key]
+        return "Cittadino non trovato"
     else:
         return 'Content-Type not supported!'
 
