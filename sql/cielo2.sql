@@ -54,3 +54,29 @@ where c.nome = ap.comp and ap.codice = v.codice and
 	v.comp = ap.comp and v.comp = c.nome and
 	c.annoFondaz >= 1950
 group by c.nome
+
+-- 9. Quali sono gli aeroporti nei quali operano esattamente due compagnie?
+select a.codice, a.nome
+from Aeroporto a, ArrPart ap
+where a.codice = ap.partenza or a.codice = ap.arrivo
+group by a.codice
+having count(distinct ap.comp) = 2
+
+-- 10. Quali sono le città con almeno due aeroporti?
+select la.citta
+from LuogoAeroporto la, Aeroporto a
+where la.aeroporto = a.codice
+group by la.citta
+having count(la.citta) >= 2
+
+-- 11. Qual è il nome delle compagnie i cui voli hanno una durata media maggiore di 6 ore?
+select v.comp
+from Volo v
+group by v.comp
+having avg(v.durataMinuti) > 360
+
+-- 12. Qual è il nome delle compagnie i cui voli hanno tutti una durata maggiore di 100 minuti?
+select v.comp 
+from Volo v 
+group by v.comp
+having min(v.durataMinuti) > 100
