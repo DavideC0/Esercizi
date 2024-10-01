@@ -1,7 +1,3 @@
-create domain Targa as (
-    check (value ~* '[A-Z]{2}[0-9]{3}[A-Z]{2}')
-);
-
 create domain Stringa_not_null as varchar(100)
     check (value is not null);
 
@@ -14,8 +10,8 @@ create type Indirizzo as (
 );
 
 create domain CodFisc as (
-
-)
+    check (value ~* '[A-Z]{6}[0-9]{9}[A-Z][0-9]{2}[0-9A-Z]{5}$')
+);
 
 create table Nazione (
     nome varchar(100) not null,
@@ -74,7 +70,7 @@ create table Cliente(
 );
 
 create table Veicolo(
-    targa Targa not null,
+    targa varchar(100) not null,
     immatricolazione int not null,
     modello varchar(100) not null,
     cliente CodFisc not null,
