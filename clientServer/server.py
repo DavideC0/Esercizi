@@ -85,5 +85,40 @@ def GestisciDeleteCittadino():
         return "Eliminazione avvenuta con successo"        
     else:
         return 'Content-Type not supported!'
+    
+@api.route('/login', methods=['POST'])
+def login():
+    content_type = request.headers.get('Content-Type')
+    print("Ricevuta chiamata " + content_type)
+    if (content_type == 'application/json'):
+        with open('login.json') as json_file:
+            user = json.load(json_file)
+        
+        for key, value in request.json.items():
+            if key in user:
+                if user[key] == value:
+                    return "True"
+        return "Nome utente o password non trovati"
+    else:
+        return 'Content-Type not supported!'
+
+@api.route('/registrazione', methods=['POST'])
+def Registrazione():
+    content_type = request.headers.get('Content-Type')
+    print("Ricevuta chiamata " + content_type)
+    if (content_type == 'application/json'):
+        with open('login.json') as json_file:
+            user = json.load(json_file)
+        
+        for key, value in request.json.items():
+            if key not in user:
+                user |= request.json
+                with open('login.json', 'w') as json_file:
+                    json.dump(user, json_file)
+            else:
+                return "Nome utente già in uso"
+        return "Registrazione avvenuta con successo"
+    else:
+        return 'Content-Type not supported!'
 
 api.run(host="127.0.0.1", port=8080)
