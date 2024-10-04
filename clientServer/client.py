@@ -1,7 +1,7 @@
 import requests,json
 import sys
 
-base_url = "http://127.0.0.1:8080"
+base_url = "https://127.0.0.1:8080"
 auth = False
 
 def GetDatiCittadino():
@@ -54,9 +54,9 @@ while True:
         login = input("Cosa vuoi fare? ")
         if login == '1':
             api_url = base_url + '/login'
-            jsonDataRequest = Login()
+            accesso = Login()
             try:
-                response = requests.post(api_url,json=jsonDataRequest)
+                response = requests.post(api_url,json=accesso, verify=False)
                 print(response.content)
                 if str(response.content) == "b'True'":
                     auth = True
@@ -67,7 +67,7 @@ while True:
             api_url = base_url + '/registrazione'
             jsonDataRequest = Login()
             try:
-                response = requests.post(api_url,json=jsonDataRequest)
+                response = requests.post(api_url,json=jsonDataRequest, verify=False)
                 print(response)
             except:
                 print("Problemi di comunicazione con il server, riprova più tardi")
@@ -90,7 +90,7 @@ while True:
                 api_url = base_url + "/add_cittadino"
                 jsonDataRequest = GetDatiCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest)
+                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
                     print(response)
                 
                 except:
@@ -100,7 +100,7 @@ while True:
                 api_url = base_url + "/read_cittadino"
                 jsonDataRequest = GetCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest)
+                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
                     print(response.content)
                     
                 except:
@@ -110,7 +110,7 @@ while True:
                 api_url = base_url + "/update_cittadino"
                 jsonDataRequest = UpdateCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest)
+                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
                     print(response.content)
                     
                 except:
@@ -120,7 +120,7 @@ while True:
                 api_url = base_url + "/delete_cittadino"
                 jsonDataRequest = DeleteCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest)
+                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
                     print(response.content)
                     
                 except:
