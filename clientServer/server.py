@@ -1,15 +1,7 @@
 from flask import Flask, json, request, render_template
+import random
 
 api = Flask(__name__)
-
-#mettere una lista di liste dove ogni lista è un cittadino
-
-#la chiave è il codice fiscale
-#add cittadino
-#read cittadino
-#update cittadino
-#delete cittadino
-
 
 @api.route('/add_cittadino', methods=['POST'])
 def GestisciAddCittadino():
@@ -120,10 +112,10 @@ def Registrazione():
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
         with open('login.json') as json_file:
-            user = json.load(json_file)
-        
+            user = json.load(json_file)        
         for key, value in request.json.items():
             if key not in user:
+                request.json[key].append(random.randint(0,1))
                 user |= request.json
                 with open('login.json', 'w') as json_file:
                     json.dump(user, json_file)

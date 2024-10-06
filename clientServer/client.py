@@ -9,14 +9,6 @@ def GetDatiCittadino():
     cognome = input("Qual'è il cognome ")
     dataN = input("Qual'è la data di nascita? ")
     codF = input("Qual'è il codice fiscale? ")
-    """
-    {
-        "nome": "Mario",
-        "cognome":"Retti",
-        "data nascita": "22/05/2010",
-        "codice fiscale": "dfrcde23t44h501u"
-    }
-    """
     datiCittadino = {codF:{"nome":nome, "cognome": cognome, "dataNascita":dataN}}
     return datiCittadino
 
@@ -43,7 +35,7 @@ def DeleteCittadino():
 def Login():
     username = input("Inserisci l'username ")
     password = input("Inserisci la password ")
-    return {username: password}
+    return {username: [password]}
 
 while True:
     if not auth:
