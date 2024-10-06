@@ -1,14 +1,19 @@
 from flask import Flask, json, request, render_template
 import random
+import os
 
 api = Flask(__name__)
+
+if not os.path.isfile('login.json'):
+    with open("login.json", "w") as json_file:
+        json.dump({}, json_file)
 
 @api.route('/add_cittadino', methods=['POST'])
 def GestisciAddCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login):
+        if login_interno(request.login) and controllo_privilegi_admin(request.login):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
             for key, vale in request.json.items():
@@ -46,7 +51,7 @@ def GestisciUpdateCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login):
+        if login_interno(request.login) and controllo_privilegi_admin(request.login):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
         
@@ -74,7 +79,7 @@ def GestisciDeleteCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login):
+        if login_interno(request.login) and controllo_privilegi_admin(request.login):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
         
@@ -97,10 +102,9 @@ def login():
     if (content_type == 'application/json'):
         with open('login.json') as json_file:
             user = json.load(json_file)
-        
         for key, value in request.json.items():
             if key in user:
-                if user[key] == value:
+                if user[key][0] == value[0]:
                     return "True"
         return "Nome utente o password non trovati"
     else:
@@ -133,5 +137,10 @@ def login_interno(user: dict):
             if users[key] == value:
                 return True
     return False
+
+def controllo_privilegi_admin(user: dict):
+    for key, value in user.items():
+        if user[key][1] == 1:
+            return True
 
 api.run(host="127.0.0.1", port=8080, ssl_context='adhoc')
