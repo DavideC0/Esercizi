@@ -7,27 +7,49 @@ api = Flask(__name__)
 if not os.path.isfile('login.json'):
     with open("login.json", "w") as json_file:
         json.dump({}, json_file)
+        
+def login_interno(user: dict):
+    with open('login.json') as json_file:
+        users = json.load(json_file)
+    for key, value in user.items():
+        if key in users:
+            if users[key][0] == value[0]:
+                return True
+    return False
+
+def controllo_privilegi_admin(user: dict):
+    with open('login.json') as json_file:
+        users = json.load(json_file)    
+    for key, value in user.items():
+        if key in users:
+            if value[0] == users[key][0]:
+                if users[key][1] == 1:
+                    return True
+    return False
 
 @api.route('/add_cittadino', methods=['POST'])
 def GestisciAddCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login) and controllo_privilegi_admin(request.login):
+        accesso = request.json[1]
+        dati = request.json[0]
+        if login_interno(accesso) and controllo_privilegi_admin(accesso):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
-            for key, vale in request.json.items():
+            for key, vale in dati.items():
                 if key in cittadini:
                     print("Errore codice fiscale già esistente")
                     return "True"
             with open("user.json", "w") as json_file:
-                cittadini |= request.json
+                cittadini |= dati
                 json.dump(cittadini, json_file)
             return "True"
         else:
             return "Dati errati"
     else:
         return 'Content-Type not supported!'
+    
     
 @api.route('/read_cittadino', methods=['POST'])
 def GestisciReadCittadino():
@@ -128,19 +150,5 @@ def Registrazione():
         return "Registrazione avvenuta con successo"
     else:
         return 'Content-Type not supported!'
-    
-def login_interno(user: dict):
-    with open('login.json') as json_file:
-        users = json.load(json_file)
-    for key, value in user.items():
-        if key in users:
-            if users[key] == value:
-                return True
-    return False
-
-def controllo_privilegi_admin(user: dict):
-    for key, value in user.items():
-        if user[key][1] == 1:
-            return True
 
 api.run(host="127.0.0.1", port=8080, ssl_context='adhoc')
