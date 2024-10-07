@@ -82,8 +82,8 @@ while True:
                 api_url = base_url + "/add_cittadino"
                 jsonDataRequest = GetDatiCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
-                    print(response)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
+                    print(response.content)
                 
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
