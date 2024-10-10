@@ -13,6 +13,9 @@ if cur is None:
 	print("Errore connessione al DB")
 	sys.exit()
 
+sQuery = "Insert into cittadini values ('qwdqwdqawd', 'gigi', 'riva', '1985-03-01')"
+db.write_in_db(cur, sQuery)	
+
 sQuery = "select * from cittadini limit 5;"
 iNumRows = db.read_in_db(cur,sQuery)
 for ii in range(0,iNumRows):
