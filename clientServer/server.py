@@ -56,11 +56,13 @@ def GestisciReadCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login):
+        accesso = request.json[1]
+        dati = request.json[0]
+        if login_interno(accesso):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
             for key, value in cittadini.items():
-                if request.json == key:
+                if dati == key:
                     return cittadini[key]
             return "Cittadino non trovato"
         else:
@@ -73,21 +75,23 @@ def GestisciUpdateCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login) and controllo_privilegi_admin(request.login):
+        accesso = request.json[1]
+        dati = request.json[0]
+        if login_interno(accesso) and controllo_privilegi_admin(accesso):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
         
-            if request.json[0] not in cittadini:
+            if dati[0] not in cittadini:
                 return "Errore, codice fiscale non trovato"
 
-            for i in range(len(request.json) - 1):
-                if request.json[i+1]:
+            for i in range(len(dati) - 1):
+                if dati[i+1]:
                     if i + 1 == 1:
-                        cittadini[request.json[0]]["cognome"] = request.json[i+1]
+                        cittadini[dati[0]]["cognome"] = dati[i+1]
                     elif i + 1 == 2:
-                        cittadini[request.json[0]]["dataNascita"] = request.json[i+1]
+                        cittadini[dati[0]]["dataNascita"] = dati[i+1]
                     elif i + 1 == 3:
-                        cittadini[request.json[0]]["nome"] = request.json[i+1]
+                        cittadini[dati[0]]["nome"] = dati[i+1]
             with open("user.json", "w") as json_file:
                 json.dump(cittadini, json_file)
             return "Modifica avvenuta con successo"   
@@ -101,13 +105,15 @@ def GestisciDeleteCittadino():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        if login_interno(request.login) and controllo_privilegi_admin(request.login):
+        accesso = request.json[1]
+        dati = request.json[0]
+        if login_interno(accesso) and controllo_privilegi_admin(accesso):
             with open("user.json") as json_file:
                 cittadini = json.load(json_file)
         
-            if request.json not in cittadini:
+            if dati not in cittadini:
                 return "Errore, codice fiscale non trovato"
-            cittadini.pop(request.json)
+            cittadini.pop(dati)
             with open("user.json", "w") as json_file:
                 json.dump(cittadini, json_file)
                 

@@ -92,7 +92,7 @@ while True:
                 api_url = base_url + "/read_cittadino"
                 jsonDataRequest = GetCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
                     print(response.content)
                     
                 except:
@@ -102,7 +102,7 @@ while True:
                 api_url = base_url + "/update_cittadino"
                 jsonDataRequest = UpdateCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
                     print(response.content)
                     
                 except:
@@ -112,7 +112,7 @@ while True:
                 api_url = base_url + "/delete_cittadino"
                 jsonDataRequest = DeleteCittadino()
                 try:
-                    response = requests.post(api_url,json=jsonDataRequest, login=accesso, verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
                     print(response.content)
                     
                 except:
