@@ -8,6 +8,10 @@ if not os.path.isfile('login.json'):
     with open("login.json", "w") as json_file:
         json.dump({}, json_file)
         
+if not os.path.isfile('user.json'):
+    with open("user.json", "w") as json_file:
+        json.dump({}, json_file)
+        
 def login_interno(user: dict):
     with open('login.json') as json_file:
         users = json.load(json_file)
