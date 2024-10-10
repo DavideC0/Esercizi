@@ -32,3 +32,21 @@ from Persona p, AttivitaProgetto ap
 where p.id = ap.persona
 group by p.id
 having sum(ap.oreDurata) >= 20
+
+-- 5. Quali sono i progetti la cui durata è superiore alla media delle durate di tutti i
+-- progetti? Restituire nome dei progetti e loro durata in giorni.
+select pr.nome, (pr.fine-pr.inizio)
+from Progetto pr, (select avg(pr.fine-pr.inizio) as media from Progetto pr) as q
+where (pr.fine-pr.inizio) > q.media
+
+-- 6. Quali sono i progetti terminati in data odierna che hanno avuto attività di tipo
+-- “Dimostrazione”? Restituire nome di ogni progetto e il numero complessivo delle
+-- ore dedicate a tali attività nel progetto.
+select pr.id, pr.nome, sum(ap.oreDurata)
+from Progetto pr, AttivitaProgetto ap
+where ap.tipo = 'Dimostrazione' and pr.id = ap.progetto
+group by pr.id
+
+-- 7. Quali sono i professori ordinari che hanno fatto più assenze per malattia del numero 
+-- di assenze medio per malattia dei professori associati? Restituire id, nome e
+-- cognome del professore e il numero di giorni di assenza per malattia.
