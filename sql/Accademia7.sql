@@ -47,6 +47,21 @@ from Progetto pr, AttivitaProgetto ap
 where ap.tipo = 'Dimostrazione' and pr.id = ap.progetto
 group by pr.id
 
--- 7. Quali sono i professori ordinari che hanno fatto più assenze per malattia del numero 
+-- 7. Quali sono i professori ordinari che hanno fatto più assenze per malattia del numero
 -- di assenze medio per malattia dei professori associati? Restituire id, nome e
 -- cognome del professore e il numero di giorni di assenza per malattia.
+select p.id, p.nome, p.cognome, count(a.*)
+from persona p, assenza a
+where p.id = a.persona and
+	p.posizione = 'Professore Ordinario' and
+	a.tipo = 'Malattia'
+group by p.id
+having count(a.*) > (
+	select avg(assenze_associati)
+	from (
+		select count(a.*) as assenze_associati
+		from persona p, assenza a
+		where p.id = a.persona and p.posizione = 'Professore Associato' and
+			a.tipo = 'Malattia'
+		group by p.id	
+		))
