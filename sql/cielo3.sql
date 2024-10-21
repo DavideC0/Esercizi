@@ -1,4 +1,4 @@
--- Qual è la durata media, per ogni compagnia, dei voli che partono da un aeroporto
+-- 1. Qual è la durata media, per ogni compagnia, dei voli che partono da un aeroporto
 -- situato in Italia?
 select v.comp, avg(v.durataMinuti)
 from Volo v, Aeroporto a, LuogoAeroporto la, ArrPart ap
@@ -7,7 +7,7 @@ where v.comp = ap.comp and v.codice = ap.codice and
 	a.codice = la.aeroporto and la.nazione = 'Italy'
 group by v.comp
 
--- Quali sono le compagnie che operano voli con durata media maggiore della durata
+-- 2. Quali sono le compagnie che operano voli con durata media maggiore della durata
 -- media di tutti i voli?
 select v.comp, avg(v.durataMinuti)
 from Volo v,(
@@ -29,9 +29,9 @@ MediaVoliArrivi as (
     select avg(numero_voli) as media_voli
     from VoliArriviPerCitta
 )
-SELECT v.citta, v.numero_voli
-FROM VoliArriviPerCitta v, MediaVoliArrivi m
-WHERE v.numero_voli > m.media_voli;
+select v.citta, v.numero_voli
+from VoliArriviPerCitta v, MediaVoliArrivi m
+where v.numero_voli > m.media_voli;
 
 -- 4. Quali sono le compagnie aeree che hanno voli in partenza da aeroporti in Italia con
 -- una durata media inferiore alla durata media di tutti i voli in partenza da aeroporti in Italia?
@@ -55,7 +55,7 @@ DurataMediaPerComp as (
 		a.codice = la.aeroporto and la.nazione = 'Italy'
 	group by v.comp
 )
-select t.comp, d.media
-from TotalePartenzaIT t, MediaPartenzaIt m, DurataMediaPerComp d
+select d.comp, d.media
+from MediaPartenzaIt m, DurataMediaPerComp d
 where d.media < m.media
-group by t.comp, d.media
+group by d.comp, d.media
