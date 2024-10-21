@@ -32,3 +32,30 @@ MediaVoliArrivi as (
 SELECT v.citta, v.numero_voli
 FROM VoliArriviPerCitta v, MediaVoliArrivi m
 WHERE v.numero_voli > m.media_voli;
+
+-- 4. Quali sono le compagnie aeree che hanno voli in partenza da aeroporti in Italia con
+-- una durata media inferiore alla durata media di tutti i voli in partenza da aeroporti in Italia?
+with TotalePartenzaIT as (
+	select v.comp, la.nazione, sum(v.durataMinuti) as tot
+	from Volo v, Aeroporto a, LuogoAeroporto la, ArrPart ap
+	where v.comp = ap.comp and v.codice = ap.codice and
+	ap.partenza = a.codice and
+	a.codice = la.aeroporto and la.nazione = 'Italy'
+	group by v.comp, la.nazione
+),
+MediaPartenzaIT as (
+	select avg(t.tot) as media
+	from  TotalePartenzaIT t
+),
+DurataMediaPerComp as (
+	select v.comp, avg(v.durataMinuti) as media
+	from Volo v, Aeroporto a, LuogoAeroporto la, ArrPart ap
+	where v.comp = ap.comp and v.codice = ap.codice and
+		ap.partenza = a.codice and
+		a.codice = la.aeroporto and la.nazione = 'Italy'
+	group by v.comp
+)
+select t.comp, d.media
+from TotalePartenzaIT t, MediaPartenzaIt m, DurataMediaPerComp d
+where d.media < m.media
+group by t.comp, d.media
