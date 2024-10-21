@@ -16,3 +16,19 @@ from Volo v,(
 			) as m
 group by v.comp, m.media
 having avg(v.durataMinuti) > m.media
+
+-- 3. Quali sono le città dove il numero totale di voli in arrivo è maggiore del numero
+-- medio dei voli in arrivo per ogni città?
+with VoliArriviPerCitta as (
+    select la.citta, count(*) as numero_voli
+    from ArrPart ap, Aeroporto a, LuogoAeroporto la
+	where ap.arrivo = a.codice and la.aeroporto = a.codice
+    group by la.citta
+),
+MediaVoliArrivi as (
+    select avg(numero_voli) as media_voli
+    from VoliArriviPerCitta
+)
+SELECT v.citta, v.numero_voli
+FROM VoliArriviPerCitta v, MediaVoliArrivi m
+WHERE v.numero_voli > m.media_voli;
