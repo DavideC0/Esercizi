@@ -74,3 +74,15 @@ elenca_prenotazioni(stato:statoPren, da:DataOra, a:DataOra): Prenotazione [0..*]
         sia result l'insieme di oggetti p:Prenotazione tali che:
             p.stato = stato
             a >= p.istante_app >= da
+
+specifica use-case Registrazione Cliente
+
+registrazione_cliente(nome:Stringa,cognome:Stringa, email:Email): Cliente
+    pre:
+        sia C l'insieme di oggetti c:Cliente non deve esistere un altro oggetto tale che:
+            C.email = email
+    post:
+        viene creato e restituito un nuovo oggetto c:Cliente tale che:
+        c.nome = nome
+        c.cognome = cognome
+        c.email = email
