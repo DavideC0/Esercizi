@@ -107,7 +107,7 @@ nuovo_ristorante(nome:Stringa, partitaIVA:PartitaIVA, indirizzo:Indirizzo, tipi_
     pre:
         (cap,città):cap_città
     post:
-        viene creato e restituito un nuovo ogetto r:Ristorante tale:
+        viene creato e restituito un nuovo oggetto r:Ristorante tale:
             r.nome = nome
             r.partitaIVA = partitaIVA
             r.indirizzo = indirizzo
@@ -115,3 +115,16 @@ nuovo_ristorante(nome:Stringa, partitaIVA:PartitaIVA, indirizzo:Indirizzo, tipi_
         deve essere creato il link (r,cap):rist_cap
         deve essere creato il link (r,città):rist_citta
         deve essere creato il link (r,t):ristorante_tipo_cucina per ogni t:TipoCucina
+
+specifica use-case Promozione
+
+nuova_promozione(nome:Stringa, sconto:Percentuale, n_coperti_g:Intero > 0, periodo_val:Periodo[1..*])
+    pre:
+        sia P l'insieme di oggetti di p:Promozione tal che non deve esistere un altro oggetto tale che:
+        P.nome = nome
+    post:
+        viene creato e restituito un nuovo oggetto di p:Promozione tale che:
+            p.nome = nome
+            p.sconto = sconto
+            p.n_coperti_g = n_coperti_g
+            p.periodo_val = periodo_val
