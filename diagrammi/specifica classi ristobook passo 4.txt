@@ -1,0 +1,12 @@
+specifica classe Promozione
+
+[V.Promozione.non_overbooking]
+    per ogni prom:Promozione
+        sia r il ristorante di prom;
+        per ogni istanza di data:Data che rientra in prom.periodi_val:
+            sia P l'insieme delle prenotazioni p tali che:
+                p è del ristorante r, (p,r):pren_rist
+                p usufruisce di prom, (p,prom):pren_prom
+                p.istante_app è nella data d
+            sia N la somma dei valori dell'attributo n_coperti di tutte le prenotazioni P
+            deve essere N <= prom.n_coperti_g
