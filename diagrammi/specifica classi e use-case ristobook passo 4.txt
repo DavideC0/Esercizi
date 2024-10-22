@@ -58,3 +58,11 @@ Nuova_prenotazione(r:ristorante, prom:Promozione, istante_app:DataOra, coperti: 
             p.stato = 'pendente'
         viene creato il link (p,r):pren_rist
         viene creato il link (c,p):client_pren dove c è l'attore che ha richiamato l'operazione
+
+cancella_prenotazione(p:Prenotazione)
+    pre:
+        p.istante_app > istante_corrente
+        p.stato in {pendente, accettata}
+        sia c:Cliente l'oggetto che rapprensenta l'attore che ha invocato l'operazione, (c,p):client_pren
+    post:
+        p.stato = 'annullata'
