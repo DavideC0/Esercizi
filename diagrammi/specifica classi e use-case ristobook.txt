@@ -27,10 +27,24 @@ accetta_prenotazioni(p:Prenotazione)
 
 rifiuta_prenotazioni(p:Prenotazione)
     pre:
-        p.stato = pendente
+        p.stato = 'pendente'
         p.istante_app > istante_corrente
     post:
-        p.stato = rifiutata
+        p.stato = 'rifiutata'
+
+consuma_prenotazioni(p:Prenotazione)
+    pre:
+        p.stato = 'accettata'
+        p.istante_app < istante_corrente
+    post:
+        p.stato = 'consumata'
+
+prenotazioni_non_utilizzate(p:Prenotazione)
+    pre:
+        p.stato = 'accettata'
+        p.istante_app < istante_corrente
+    post:
+        p.stato = 'non utilizzata'
 
 specifica use-case Prenotazioni
 
