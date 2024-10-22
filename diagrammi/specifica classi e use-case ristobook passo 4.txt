@@ -86,3 +86,18 @@ registrazione_cliente(nome:Stringa,cognome:Stringa, email:Email): Cliente
         c.nome = nome
         c.cognome = cognome
         c.email = email
+
+specifica use-case Registrazione Ristorante
+
+nuovo_ristorante(nome:Stringa, partitaIVA:PartitaIVA, indirizzo:Indirizzo, tipi_cucine:TipoCucina[1..*], durata_appunt_std:Durata, cap:CAP, citta:Citta): Ristorante
+    pre:
+        (cap,città):cap_città
+    post:
+        viene creato e restituito un nuovo ogetto r:Ristorante tale:
+            r.nome = nome
+            r.partitaIVA = partitaIVA
+            r.indirizzo = indirizzo
+            r.durata_appunt_std = durata_appunt_std
+        deve essere creato il link (r,cap):rist_cap
+        deve essere creato il link (r,città):rist_citta
+        deve essere creato il link (r,t):ristorante_tipo_cucina per ogni t:TipoCucina
