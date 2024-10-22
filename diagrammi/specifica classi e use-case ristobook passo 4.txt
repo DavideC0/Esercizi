@@ -16,14 +16,14 @@ specifica classe Ristorante
 [V.Ristorante.cap_città]
     il CAP di ogni ristorante deve essere associato alla città del ristorante
 
-spacifica use_case GestionePrenotazioni
+specifica use-case GestionePrenotazioni
 
 accetta_prenotazioni(p:Prenotazione)
     pre:
-        p.stato = pendente
+        p.stato = 'pendente'
         p.istante_app > istante_corrente
     post:
-        p.stato = accettata
+        p.stato = 'accettata'
 
 rifiuta_prenotazioni(p:Prenotazione)
     pre:
@@ -31,3 +31,30 @@ rifiuta_prenotazioni(p:Prenotazione)
         p.istante_app > istante_corrente
     post:
         p.stato = rifiutata
+
+specifica use-case Prenotazioni
+
+Nuova_prenotazione(r:ristorante, prom:Promozione, istante_app:DataOra, coperti: Intero > 0) :Prenotazione
+    pre:
+        istante_app > istante_corrente
+        istante_app non ricade nel periodo di indispobibilità  di r, ovvero:
+            il periodo [istante_app, r.durata_appunt_std]
+            non interseca in alcun modo di r.periodi_indisp
+        se prom è valorizzata:
+            il ristorante di prom è r (p,r):prom_rist
+            la data di istante_app rientra nei periodi di prom.periodi_val
+        sia P l'insieme delle prenotazioni p tali che:
+            p è del ristorate r, (p,r):pren_rist
+            p usufruisce di prom, (p, prom):pren_prom
+            p è del giorno di istante_app, cioè
+                    p.istante_app e istante_app sono nella stessa data
+        sia N la somma dei valori dell'attributo n_coperti di tutte le prenotazioni p
+        deve essere prom.n_coperti_g >= n + coperti
+    post:
+        Viene creato e restituito un nuovo oggetto p:Prenotazione tale che:
+            p.istante_pren = istante_corrente
+            p.istante_app = istante_app
+            p.n_coperti = n_coperti
+            p.stato = 'pendente'
+        viene creato il link (p,r):pren_rist
+        viene creato il link (c,p):client_pren dove c è l'attore che ha richiamato l'operazione
