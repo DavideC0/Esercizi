@@ -66,3 +66,11 @@ cancella_prenotazione(p:Prenotazione)
         sia c:Cliente l'oggetto che rapprensenta l'attore che ha invocato l'operazione, (c,p):client_pren
     post:
         p.stato = 'annullata'
+
+elenca_prenotazioni(stato:statoPren, da:DataOra, a:DataOra): Prenotazione [0..*]
+    pre:
+        a >= a
+    post:
+        sia result l'insieme di oggetti p:Prenotazione tali che:
+            p.stato = stato
+            a >= p.istante_app >= da
