@@ -10,3 +10,8 @@ specifica classe Promozione
                 p.istante_app è nella data d
             sia N la somma dei valori dell'attributo n_coperti di tutte le prenotazioni P
             deve essere N <= prom.n_coperti_g
+
+specifica classe Ristorante
+
+[V.Ristorante.cap_città]
+    il CAP di ogni ristorante deve essere associato alla città del ristorante
