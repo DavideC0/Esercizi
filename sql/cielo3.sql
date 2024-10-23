@@ -69,3 +69,22 @@ DeviazioneVoli as (
 select ma.citta, ma.media
 from MediaArrivi ma, DeviazioneVoli dv
 where abs(dv.mediatot - ma.media) > dv.deviazionetot
+
+-- 6. Quali sono le nazioni che hanno il maggior numero di città dalle quali partono voli
+-- diretti in altre nazioni?
+with Stats as (
+	-- per ogni nazione ---> num città dalle quali partono voli internazionali
+	select la.nazione, count(distinct la.citta) as n_citta
+	from LuogoAeroporto la, ArrPart ap, LuogoAeroporto la2
+	where la.aeroporto = ap.partenza and
+		la2.aeroporto = ap.arrivo and
+		la.nazione <> la2.nazione
+	group by la.nazione
+),
+MaxVoli as (
+	select max(n_citta) as max_n_citta
+	from Stats
+)
+select s.nazione
+from Stats s, MaxVoli m
+where s.n_citta = m.max_n_citta
