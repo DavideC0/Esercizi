@@ -32,20 +32,6 @@ rifiuta_prenotazioni(p:Prenotazione)
     post:
         p.stato = 'rifiutata'
 
-consuma_prenotazioni(p:Prenotazione)
-    pre:
-        p.stato = 'accettata'
-        p.istante_app < istante_corrente
-    post:
-        p.stato = 'consumata'
-
-prenotazioni_non_utilizzate(p:Prenotazione)
-    pre:
-        p.stato = 'accettata'
-        p.istante_app < istante_corrente
-    post:
-        p.stato = 'non utilizzata'
-
 specifica use-case Prenotazioni
 
 Nuova_prenotazione(r:ristorante, prom:Promozione, istante_app:DataOra, coperti: Intero > 0) :Prenotazione
@@ -116,11 +102,27 @@ nuovo_ristorante(nome:Stringa, partitaIVA:PartitaIVA, indirizzo:Indirizzo, tipi_
         deve essere creato il link (r,città):rist_citta
         deve essere creato il link (r,t):ristorante_tipo_cucina per ogni t:TipoCucina
 
+specifica use-case GestionePrenotazioni
+
+consuma_prenotazioni(p:Prenotazione): Prenotazione
+    pre:
+        p.stato = 'accettata'
+        p.istante_app < istante_corrente
+    post:
+        p.stato = 'consumata'
+
+prenotazioni_non_utilizzate(p:Prenotazione): Prenotazione
+    pre:
+        p.stato = 'accettata'
+        p.istante_app < istante_corrente
+    post:
+        p.stato = 'non utilizzata'
+
 specifica use-case Promozione
 
-nuova_promozione(nome:Stringa, sconto:Percentuale, n_coperti_g:Intero > 0, periodo_val:Periodo[1..*])
+nuova_promozione(nome:Stringa, sconto:Percentuale, n_coperti_g:Intero > 0, periodo_val:Periodo[1..*]): Promozione
     pre:
-        sia P l'insieme di oggetti di p:Promozione tal che non deve esistere un altro oggetto tale che:
+        sia P l'insieme di oggetti di p:Promozione non deve esistere un altro oggetto tale che:
         P.nome = nome
     post:
         viene creato e restituito un nuovo oggetto di p:Promozione tale che:
@@ -128,3 +130,13 @@ nuova_promozione(nome:Stringa, sconto:Percentuale, n_coperti_g:Intero > 0, perio
             p.sconto = sconto
             p.n_coperti_g = n_coperti_g
             p.periodo_val = periodo_val
+
+specifica use-case TipoCucina
+
+nuovo_tipo_cucina(nome:Stringa): TipoCucina
+    pre:
+        sia T l'insieme di oggetti di t:TipoCucina non deve esistere un altro oggetto tale che:
+        p.nome = nome
+    post:
+        viene creato e restituito un nuovo oggetto result:TipoCucina tale che:
+            result.nome = nome
