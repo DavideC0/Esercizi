@@ -68,4 +68,4 @@ DeviazioneVoli as (
 )
 select ma.citta, ma.media
 from MediaArrivi ma, DeviazioneVoli dv
-where (dv.mediatot - ma.media) > dv.deviazionetot
+where abs(dv.mediatot - ma.media) > dv.deviazionetot
