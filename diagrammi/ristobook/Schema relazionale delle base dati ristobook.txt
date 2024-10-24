@@ -1,0 +1,82 @@
+Schema relazionale delle base dati
+
+
+CAP(__valore__:TipoCap)
+	[V.CAP.incl] v. inclusione: valore occorre in cap_citta(cap) --> da implementare come trigger
+
+Citta(__id__:serial, nome:varchar)
+	v. inclusione: id occorre in cap_citta(citta)
+
+cap_citta(
+	__cap:TipoCap__,
+	__citta:integer__
+)
+	FK: cap references Cap(valore)
+	FK: citta references Citta(id)
+
+
+Ristorante(
+	__id__:serial,
+	nome:varchar,
+	partitaIVA: PartitaIVA,
+	indirizzo:Indirizzo,
+	durata_appunt_std: interval,
+	cap: TipoCap,
+	citta: integer
+)
+	FK: cap references CAP(valore)
+	FK: citta refernces Citta(id)	
+
+	[V.Ristorante.cap_citta]
+	FK: (cap, citta) references cap_citta(cap, citta)
+
+	[V.Ristorante.incl] v. inclusione: valore occorre in ristoranteTipoCucina(ristorante) -- implementare trigger
+
+TipoCucina(
+	__nome__:varchar
+)
+
+ristoranteTipoCucina (
+	__ristorante__:integer,
+	__tipoCucina__*:varchar
+)
+	FK: ristorante references Ristorante(id)
+	FK: tipoCucina references TipoCucina(nome)
+
+Promozione(
+	__ristorante__:integer,
+	 __nome__:varchar, 
+	 sconto:Percentuale, 
+	 n_coperti_g:IntegerGZ
+)
+	FK: (ristorante) references Ristorante(id)
+
+	V. incl [V.Promozione.incl]:  (ristorante, nome) compare in PeriodoValiditaPromozione(ristorante, nome)
+
+Prenotazione(
+	__id__:serial,
+	istante_pren:timestamp,
+	istante_app:timestamp,
+	n_coperti: IntegerGZ,
+	stato:StatoPren,
+	ristorante:integer,
+	cliente:Email,
+	promozione*:varchar   -- "*": può assumere valori NULL
+)	
+	FK: (ristorante) references Ristorante(id)
+	FK: (ristorante, promozione) references Promozione(ristorante, nome)
+	FK: (cliente) references Cliente(email)
+
+
+PeriodoValiditaPromozione(
+	__ristorante__:integer, 
+	__promozione__:varchar 
+	__periodo__:Periodo
+)	
+	FK: (ristorante, promozione) references Promozione(ristorante, none)
+
+Cliente (
+	__email__:Email,
+	nome:varchar;
+	cognome:varchar
+)

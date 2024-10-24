@@ -1,0 +1,34 @@
+Progetto dei trigger
+
+
+[V.CAP.incl]
+
+Politiche di accesso ai dati:
+	- impedire UPDATE in CAP
+	- impedisco UPDATE in cap_citta 
+
+TRIGGER V.CAP.incl.cap
+ - eventi: INSERT(new) in Cap
+ - il trigger scatta dopo la modifica
+ - la funzione da invocare:
+ 	IF NOT EXISTS (
+ 		SELECT *
+ 		FROM cap_citta
+ 		WHERE cap = new.valore
+ 	) THEN:
+ 		raise exception(...)
+ 	ELSE RETURN new
+
+
+ TRIGGER V.CAP.incl.cap_citta
+	- eventi: DELETE(old) in cap_citta
+ 	- il trigger scatta dopo la modifica
+ 	- la funzione da invocare:
+ 		IF NOT EXISTS (
+ 			SELECT *
+ 			FROM CAP 
+	 		WHERE valore = old.cap
+	 	) THEN:
+	 		raise exception(...)
+	 	ELSE RETURN new
+
