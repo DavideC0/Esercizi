@@ -1,0 +1,4 @@
+specifica vincoli classe Ricovero
+
+[V.Ricovero.inizio]
+    la data di inizio deve essere minore di quella di fine

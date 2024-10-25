@@ -1,0 +1,32 @@
+schema relazionale della base dati
+
+Paziente (
+    __cf__:varchar,
+    nome:varchar,
+    cognome:varchar
+)
+
+Ricovero (
+    __id__:serial,
+    inizio:date,
+    fine*:date,
+    paziente:varchar
+)
+    FK: paziente references Paziente(cf)
+
+SpecializzazioneMedica (
+    __nome__:varchar
+)
+
+Medico (
+    __codice__:integer,
+    specializzazione:varchar
+)
+    FK: specializzazione references SpecializzazioneMedica(nome)
+
+medico_resp (
+    __medico__:integer,
+    __ricovero__:integer
+)
+    FK: medico references Medico(codice)
+    FK: ricovero references Ricovero(id)
