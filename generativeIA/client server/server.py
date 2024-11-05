@@ -107,17 +107,15 @@ def GestisciDeleteCittadino():
     if (content_type == 'application/json'):
         accesso = request.json[1]
         dati = request.json[0]
-        if login_interno(accesso) and controllo_privilegi_admin(accesso):
-            with open("anagrafe.json") as json_file:
-                cittadini = json.load(json_file)
-        
-            if dati not in cittadini:
-                return "Errore, codice fiscale non trovato"
-            cittadini.pop(dati)
-            with open("anagrafe.json", "w") as json_file:
-                json.dump(cittadini, json_file)
-                
-            return "Eliminazione avvenuta con successo"
+        if controllo_privilegi_admin(accesso) == 1:
+            sQuery = f"delete from cittadini where codFisc = '{dati}'"
+            iRetValue = db.write_in_db(mydb,sQuery)
+            if iRetValue == -2:
+                return "Nome utente non esistente"
+            elif iRetValue == 0:
+                return "Eliminazione avvenuta con successo"
+            else:
+                return "Errore non gestito nella registrazione"                
         else:
             return "Dati errati"
     else:
