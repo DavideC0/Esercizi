@@ -52,12 +52,18 @@ def GestisciReadCittadino():
     if (content_type == 'application/json'):
         accesso = request.json[1]
         dati = request.json[0]
-        if login_interno(accesso):
-            with open("anagrafe.json") as json_file:
+        if controllo_privilegi_admin(accesso) == 1 or controllo_privilegi_admin(accesso) == 0:
+            """with open("anagrafe.json") as json_file:
                 cittadini = json.load(json_file)
             for key, value in cittadini.items():
                 if dati == key:
                     return cittadini[key]
+            return "Cittadino non trovato"""
+            sQuery = f"select * from cittadini where codFisc = '{dati}'"
+            iRetValue = db.read_in_db(mydb,sQuery)
+            if iRetValue == 1:
+                sValue = db.read_next_row(mydb)
+                return sValue
             return "Cittadino non trovato"
         else:
             return "Dati errati"
