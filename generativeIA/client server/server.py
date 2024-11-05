@@ -77,23 +77,23 @@ def GestisciUpdateCittadino():
     if (content_type == 'application/json'):
         accesso = request.json[1]
         dati = request.json[0]
-        if login_interno(accesso) and controllo_privilegi_admin(accesso):
-            with open("anagrafe.json") as json_file:
-                cittadini = json.load(json_file)
-        
-            if dati[0] not in cittadini:
-                return "Errore, codice fiscale non trovato"
+        if controllo_privilegi_admin(accesso) == 1:
+            sQuery = f"select * from cittadini where codFisc = '{dati[0]}'"
+            iRetValue = db.read_in_db(mydb,sQuery)
+            if iRetValue != 1:
+                return "Cittadino non trovato"
 
             for i in range(len(dati) - 1):
                 if dati[i+1]:
                     if i + 1 == 1:
-                        cittadini[dati[0]]["cognome"] = dati[i+1]
+                        sQuery = f"update cittadini set cognome = '{dati[i+1]}' where codFisc = '{dati[0]}'"
+                        db.write_in_db(mydb,sQuery)
                     elif i + 1 == 2:
-                        cittadini[dati[0]]["dataNascita"] = dati[i+1]
+                        sQuery = f"update cittadini set dataN = '{dati[i+1]}' where codFisc = '{dati[0]}'"
+                        db.write_in_db(mydb,sQuery)
                     elif i + 1 == 3:
-                        cittadini[dati[0]]["nome"] = dati[i+1]
-            with open("anagrafe.json", "w") as json_file:
-                json.dump(cittadini, json_file)
+                        sQuery = f"update cittadini set nome = '{dati[i+1]}' where codFisc = '{dati[0]}'"
+                        db.write_in_db(mydb,sQuery)
             return "Modifica avvenuta con successo"   
         else:
             return "Dati errati"     
