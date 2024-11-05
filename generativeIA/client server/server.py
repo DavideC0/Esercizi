@@ -6,17 +6,9 @@ import sys
 
 api = Flask(__name__)
 mydb = db.connect()
-
 if mydb is None:
+    print("Errore connessione al DB")
     sys.exit()
-
-if not os.path.isfile('utenti.json'):
-    with open("utenti.json", "w") as json_file:
-        json.dump({}, json_file)
-        
-if not os.path.isfile('anagrafe.json'):
-    with open("anagrafe.json", "w") as json_file:
-        json.dump({}, json_file)
         
 def login_interno(user: dict):
     with open('utenti.json') as json_file:
@@ -132,45 +124,52 @@ def GestisciDeleteCittadino():
             return "Dati errati"
     else:
         return 'Content-Type not supported!'
-    """
-    with open('utenti.json') as json_file:
-            user = json.load(json_file)
-        for key, value in request.json.items():
-            if key in user:
-                if user[key][0] == value[0]:
-                    return "True"
-        return "Nome utente o password non trovati"
-    """
+    
 @api.route('/login', methods=['POST'])
 def login():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
+        iStato = -1
         for key, value in request.json.items():
-            sQuery = f"select * from Utente where nome = '{key}' and password = '{value[0]}'"
-            iret = db.read_in_db(mydb, sQuery)
-            if iret == 1:
-                return "True"
-        return "False"
+            sQuery = f"select stato from utenti where username = '{key}' and pass = '{value[0]}';"
+            print(sQuery)
+            iNumRecord = db.read_in_db(mydb, sQuery)
+            if iNumRecord == 1:
+                print("Login terminato correttamente")
+                lRecord = db.read_next_row(mydb)
+                iStato = lRecord[1][0]
+                return '{"Esito":"ok", "Stato": ' + str(iStato) + '}'
+            elif iNumRecord == 0:
+                print("Credenziali errate")
+                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
+            elif iNumRecord <= -1:
+                print("Dati errati")
+                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
+            else:
+                print("Attenzione: attacco in corso")
+                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
     else:
         return 'Content-Type not supported!'
-    
+
 @api.route('/registrazione', methods=['POST'])
 def Registrazione():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
         for key, value in request.json.items():
-            sQuery = f"insert into Utente(nome,password,privilegi) values ('{key}','{value[0]}','{random.randint(0,1)}')"
-            iRet = db.write_in_db(mydb,sQuery)
-            if iRet == -2:
+            sQuery = f"insert into utenti(username,pass,stato) values ('{key}', '{value[0]}',{random.randint(0,1)})"
+            print(sQuery)
+            iRetValue = db.write_in_db(mydb, sQuery) #restituisce 0 se è andato tutto bene, -1 errore, -2 duplicate key
+            print(iRetValue)
+            if iRetValue == -2:
                 return "Nome utente già in uso"
-            elif iRet == 0:
+            elif iRetValue == 0:
                 return "Registrazione avvenuta con successo"
-            elif iRet == -1:
+            else:
                 return "Errore non gestito nella registrazione"
         return "Errore richiesta non conforme"
     else:
         return 'Content-Type not supported!'
 
-api.run(host="127.0.0.1", port=8080, ssl_context='adhoc')
+api.run(host="127.0.0.1", port=8080, ssl_context='adhoc')   
