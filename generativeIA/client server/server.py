@@ -9,25 +9,17 @@ mydb = db.connect()
 if mydb is None:
     print("Errore connessione al DB")
     sys.exit()
-        
-def login_interno(user: dict):
-    with open('utenti.json') as json_file:
-        users = json.load(json_file)
-    for key, value in user.items():
-        if key in users:
-            if users[key][0] == value[0]:
-                return True
-    return False
-
+    
 def controllo_privilegi_admin(user: dict):
-    with open('utenti.json') as json_file:
-        users = json.load(json_file)    
     for key, value in user.items():
-        if key in users:
-            if value[0] == users[key][0]:
-                if users[key][1] == 1:
-                    return True
-    return False
+        sQuery = f"select stato from utenti where username = '{key}' and pass = '{value[0]}';"
+        print(sQuery)
+        iNumRecord = db.read_in_db(mydb, sQuery)
+        if iNumRecord == 1:
+            lRecord = db.read_next_row(mydb)
+            iStato = lRecord[1][0]
+            return iStato
+        return False
 
 @api.route('/add_cittadino', methods=['POST'])
 def GestisciAddCittadino():
@@ -36,17 +28,17 @@ def GestisciAddCittadino():
     if (content_type == 'application/json'):
         accesso = request.json[1]
         dati = request.json[0]
-        if login_interno(accesso) and controllo_privilegi_admin(accesso):
-            with open("anagrafe.json") as json_file:
-                cittadini = json.load(json_file)
-            for key, vale in dati.items():
-                if key in cittadini:
-                    print("Errore codice fiscale già esistente")
-                    return "True"
-            with open("anagrafe.json", "w") as json_file:
-                cittadini |= dati
-                json.dump(cittadini, json_file)
-            return "True"
+        if controllo_privilegi_admin(accesso) == 1:
+            for key, value in dati.items():
+                sQuery = f"insert into cittadini(codFisc,nome,cognome,dataN) values ('{key}', '{value['nome']}', '{value['cognome']}', '{value['dataNascita']}')"
+                iRetValue = db.write_in_db(mydb,sQuery)
+                if iRetValue == -2:
+                    return "Codice fiscale già esistente"
+                elif iRetValue == 0:
+                    return "Registrazione avvenuta con successo"
+                else:
+                    return "Errore non gestito nella registrazione"
+            return "Errore richiesta non conforme"
         else:
             return "Dati errati"
     else:
