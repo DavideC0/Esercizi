@@ -1,0 +1,2 @@
+Specifica tipi di dato
+Motivo = {copyright,osceno}

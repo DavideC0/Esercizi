@@ -1,0 +1,19 @@
+Specifica operazioni Video
+
+n_visualizzazioni() : Intero
+    pre:
+    post:
+    l'operazione non modifica il livello estensionale
+    il valore di result è definito come segue:
+        sia E l'insieme di link di associazione vis_video che coinvolgono this
+        sia result la cardinalità di E
+
+voto_medio() : Reale
+    pre:
+    post:
+    l'operazione non modifica il livello estensionale
+    il valore di result è definito come segue:
+        sia E l'insieme di link di associazione valutazione che coinvolgono this
+        sia S la somma dei valori dell'attributo voto di tutti i link nell'insieme E
+        sia N la cardinalità di E
+        result = S/N
