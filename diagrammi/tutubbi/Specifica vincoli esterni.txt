@@ -1,0 +1,21 @@
+Specifica vincoli esterni
+
+per ogni v1:Video:
+sia v1 tale che:
+    (v1,u1:Utente):pubblica
+    (v2:Video,u2:Utente):pubblica
+allora non può esistere (v1,v2):videoRisposta tale che u1 = u2
+
+per ogni v:Video
+sia v tale che:
+    (v,u:Utente):pubblica
+    allora non può esistere (v,u):valutazione
+
+per ogni c:Commento
+non può esistere c tale che:
+    (c,ur:Utente):utente_commento
+    (c,v:Video):commento_video
+se non esiste vis:Visualizzazione tale che:
+    (vis,u:Utente):utente_vis
+    (vis,v):vis_video
+    u = ur
