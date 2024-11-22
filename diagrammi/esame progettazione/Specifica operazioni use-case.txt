@@ -1,0 +1,36 @@
+Specifica use-case
+calcolo_n_biglietti_per_periodo(et:EsposizioneTemporanea,d:data): int
+    pre:
+    post:
+        il valore di result che sarà restituito viene definito come segue:
+            sia B l'insieme di oggetti b:ExtendexAccess tale che 
+                b.dataValidità = d
+                esista un link (b,et):esp_bigl
+            sia result la cardinalità di B
+
+calcolo_piu_venduto(inizioPeriodo:data,finePeriodo:data): EsposizioneTemporanea
+    pre:
+        finePeriodo > inizioPeriodo
+    post:
+        il valore di result è definito come segue:
+            sia B l'insieme di oggetti b:ExtendexAccess tale che:
+                inizioPeriodo > b.istante > finePeriodo
+            raggruppa in un insieme E la cardinalità di B tale che:
+                ogni elemento sia raggruppato per ogni oggetto et:EsposizioneTemporanea
+                deve esistere un link tra un elemento di B ed et 
+                il risultato dell'insieme sarà un o:EsposizioneTemporanea
+                con associato il numero di link tra o e i biglietti associati in quel periodo
+            il valore di result sarà l'oggetto EsposizioneTemporanea
+            in cui sia associato il valore massimo nell'insieme E
+
+calcolo_non_esposte(a:Autore, inizioPeriodo:data, finePeriodo:data): Opera[0..*]
+    pre:
+        finePeriodo > inizioPeriodo
+    post:
+        il valore dell'insieme result è definito come segue:
+            sia E l'insieme di e:Esposizione tale che:
+                che il periodo di validità di e rientri tra inizioPeriodo e finePeriodo
+            sia O l'insieme di o:Opera tale che:
+                esista un link (a,o):crea
+            sia il valore del'insieme result un numero qualsiasi di oggetti di O tale che
+            non esistano link con nessuno degli oggetti di E

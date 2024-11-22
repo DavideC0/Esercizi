@@ -1,0 +1,10 @@
+classe ExtendexAccess
+calcoloPrezzo():Reale >= 0
+    pre:
+    post:
+        il valore di result è definito come segue:
+            sia E l'insieme di oggetti e:EsposizioneTemporanea tali che
+            siano associati (this,e):esp_bigl
+            sia S la somma dei valori dell'attributo e.prezzoAccesso di tutti gli elementi nell'insieme E
+            sia t:Tariffa associata (this,t):bigl_tar
+            result = t.prezzoBase + S
