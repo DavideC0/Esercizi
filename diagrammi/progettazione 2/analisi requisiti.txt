@@ -1,0 +1,13 @@
+medici = nome, cognome, codice fiscale, specializzazione
+paziente =  nome, cognome,cognome, codice fiscale, data di nascita, indirizzo, telefono, email
+appuntamento = data, ora, codice fiscale paziente, codice fiscale medico
+funzioni:
+    crea appuntamento
+    elimina appuntamento
+    modifica appuntamento
+    ottieni lista appuntamenti
+        per visualizza dettagli paziente cliccare un link sul nome del paziente
+    ottieni lista appuntamenti per giorno
+        per visualizza dettagli paziente cliccare un link sul nome del paziente
+    ottieni lista di appuntamenti di un determinato medico
+        per visualizza dettagli paziente cliccare un link sul nome del paziente
