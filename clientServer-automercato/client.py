@@ -7,7 +7,7 @@ auth = False
 def Login():
     username = input("Inserisci l'username ")
     password = input("Inserisci la password ")
-    return [username,password]
+    return {"username": username, "password": password}
 
 def ricercaveicolo():
     tipo_veicolo = input("Inserisci il tipo di veicolo (auto o moto) ")
@@ -47,9 +47,9 @@ while True:
                 jResponse = response.json()
                 if jResponse['Esito'] == "ok":
                     auth = True
-                    stato = jResponse['Stato']
-                print(auth)
-            except:
+                    print(jResponse['messaggio'])
+            except Exception as e:
+                print(e)
                 print("Problemi di comunicazione con il server, riprova più tardi")
         elif operazione == '2':
             api_url = base_url + '/ricerca_veicolo'
@@ -74,12 +74,14 @@ while True:
     else:        
         while(True):
             print("Operazioni disponibili:")
-            print("1. Inserisci cittadino (es. atto di nascita)")
-            print("2. Richiedi cittadino (es. cert. residenza)")
-            print("3. Modifica cittadino (es. cambio residenza)")
-            print("4. Elimina cittadino (es. trasferim altro comune)")
-            print("5. Logout")
-            print("6. Esci")
+            print("1. Inserisci un nuovo veicolo")
+            print("2. Inserisci un nuovo accessorio")
+            print("3. Inserisci dati di vendita di un auto")
+            print("4. Inserisci dati di vendita di una moto")
+            print("5. Ottieni report vendite")
+            print("6. Ottieni report vendite tra due date")
+            print("7. Logout")
+            print("8. Esci")
             sOper = input("Cosa vuoi fare? ")
             if sOper == "1":
                 print("Richiesto atto di nascita")
@@ -121,10 +123,10 @@ while True:
                     
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "5":
+            elif sOper == "7":
                 auth = False
                 print("Logout effetuato con successo")
                 break
-            elif sOper=="6":
+            elif sOper=="8":
                 print("Buona giornata!")
                 sys.exit()  

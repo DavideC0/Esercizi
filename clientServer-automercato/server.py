@@ -13,8 +13,8 @@ def controllo_privilegi_admin(user: dict):
     for key, value in user.items():
         sQuery = f"select stato from utenti where username = '{key}' and pass = '{value[0]}';"
         print(sQuery)
-        iNumRecord = db.read_in_db(mydb, sQuery)
-        if iNumRecord == 1:
+        n_record = db.read_in_db(mydb, sQuery)
+        if n_record == 1:
             lRecord = db.read_next_row(mydb)
             iStato = lRecord[1][0]
             return iStato
@@ -37,27 +37,21 @@ def login():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        iStato = -1
-        for key, value in request.json.items():
-            sQuery = f"select stato from utenti where username = '{key}' and pass = '{value[0]}';"
-            print(sQuery)
-            iNumRecord = db.read_in_db(mydb, sQuery)
-            if iNumRecord == 1:
-                print("Login terminato correttamente")
-                lRecord = db.read_next_row(mydb)
-                iStato = lRecord[1][0]
-                return '{"Esito":"ok", "Stato": ' + str(iStato) + '}'
-            elif iNumRecord == 0:
-                print("Credenziali errate")
-                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
-            elif iNumRecord <= -1:
-                print("Dati errati")
-                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
-            else:
-                print("Attenzione: attacco in corso")
-                return '{"Esito":"ko", "Stato": ' + str(iStato) + '}'
-    else:
-        return 'Content-Type not supported!'
+        dati_login = request.json
+        username = dati_login["username"]
+        password = dati_login["password"]
+        query = f"select * from utente where username = '{username}' and password = '{password}'"
+        n_record = db.read_in_db(mydb,query)        
+        if n_record == 1:
+            return '{"Esito":"ok", "messaggio": "Login terminato con successo"}'
+        elif n_record == 0:
+            return '{"Esito":"ko", "messaggio": "Credenziali errate"}'
+        elif n_record <= -1:
+            print("Dati errati")
+            return '{"Esito":"ko", "messaggio": "Dati errati"}'
+        else:
+            return '{"Esito":"ko", "messaggio": "Errore generico"}'
+    return 'Content-Type not supported!'
 
 @api.route('/registrazione', methods=['POST'])
 def Registrazione():
