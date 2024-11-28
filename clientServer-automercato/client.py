@@ -12,7 +12,7 @@ def Login():
 def ricercaveicolo():
     tipo_veicolo = input("Inserisci il tipo di veicolo (auto o moto) ")
     marca = input("Inserisci la marca (lasciare vuoto per non specificare) ")
-    modello = input("Inserisci il modello (lasciare vuoto per non specificare )")
+    modello = input("Inserisci il modello (lasciare vuoto per non specificare) ")
     l = {"tipo_veicolo": tipo_veicolo}
     if marca:
         l["marca"] = marca
@@ -23,6 +23,10 @@ def ricercaveicolo():
     else:
         l["modello"] = False
     return l
+
+def ricercaaccessorio():
+    compatibilità = input("Inserisci la compatibilità dell'accessorio ((auto, moto o lasciare vuoto per entrambi) ")
+    return {"compatibilità": compatibilità}
     
 
 stato = -1
@@ -31,7 +35,8 @@ while True:
         print("Operazioni disponibili:")
         print("1. Login (Solo per admin per aggiunta di nuovi elementi o nuovi utenti admin)")
         print("2. Ricerca di un auto o moto")
-        print("3. Esci")
+        print("3. Ricerca accessori veicolo")
+        print("4. Esci")
         operazione = input("Cosa vuoi fare? ")
         if operazione == '1':
             api_url = base_url + '/login'
@@ -51,11 +56,18 @@ while True:
             jsonDataRequest = ricercaveicolo()
             try:
                 response = requests.post(api_url,json=jsonDataRequest)
-                print(response.content.decode('ascii'))
-            except Exception as e:
-                print(e)
+                print(response.content.decode('UTF-8'))
+            except:
                 print("Problemi di comunicazione con il server, riprova più tardi")
         elif operazione == '3':
+            api_url = base_url + '/ricerca_accessorio'
+            jsonDataRequest = ricercaaccessorio()
+            try:
+                response = requests.post(api_url,json=jsonDataRequest)
+                print(response.content.decode('UTF-8'))
+            except:
+                print("Problemi di comunicazione con il server, riprova più tardi")
+        elif operazione == '4':
             sys.exit()
         else:
             print("Errore operazione non esistente")

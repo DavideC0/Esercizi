@@ -20,12 +20,17 @@ def controllo_privilegi_admin(user: dict):
             return iStato
         return False
     
-def convert_query_toString(l: list):
+def convert_query_toString_veicolo(l: list):
     s = ""
     for elem in l:
-        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + "\n"    
+        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + " Prezzo base= " + str(elem[3]) + "\n"    
     return s
-    
+
+def convert_query_toString_accessorio(l: list):
+    s = ""
+    for elem in l:
+        s += "Id= " + str(elem[0]) + " Nome= " + elem[1] + " Compatibilità= " + elem[2] + " Descrizione= " + elem[3] + " Prezzo= " + str(elem[4]) + "\n"
+    return s    
     
 @api.route('/login', methods=['POST'])
 def login():
@@ -89,7 +94,7 @@ def ricerca_veicolo():
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             elif data["marca"] and not data["modello"]:
                 #query con soltanto il primo
                 marca = data["marca"]
@@ -97,7 +102,7 @@ def ricerca_veicolo():
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             elif not data["marca"] and data["modello"]:
                 #query con soltato il secondo elemento
                 modello = data["modello"]
@@ -105,13 +110,13 @@ def ricerca_veicolo():
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             else:
                 query = f"select * from Automobile"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
         elif data["tipo_veicolo"] == 'moto' or data["tipo_veicolo"] == 'Moto' or data["tipo_veicolo"] == 'motocicletta' or data["tipo_veicolo"] == 'Motocicletta':
             if data["marca"] and data["modello"]:
                 #query con entrambi
@@ -121,7 +126,7 @@ def ricerca_veicolo():
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             elif data["marca"] and not data["modello"]:
                 #query con soltanto il primo
                 marca = data["marca"]
@@ -129,7 +134,7 @@ def ricerca_veicolo():
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             elif not data["marca"] and data["modello"]:
                 #query con soltato il secondo elemento
                 modello = data["modello"]
@@ -137,15 +142,41 @@ def ricerca_veicolo():
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
             else:
                 #query con nessun elemento specificato
                 query = f"select * from Motocicletta"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString(l)
+                return convert_query_toString_veicolo(l)
         else:
             return 'Tipo veicolo inserito non esistente'
-
+        
+@api.route('/ricerca_accessorio', methods=['POST'])
+def ricerca_accessorio():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json
+        l = []
+        if data["compatibilità"] == 'auto' or  data["compatibilità"] == 'Auto' or  data["compatibilità"] == 'automobile' or  data["compatibilità"] == 'Automobile':
+            query = f"select * from Acessorio where tipo_veicolo_compatibilità = 'Auto'"
+            db.read_in_db(mydb,query)
+            for elem in mydb:
+                l.append(elem)
+            return convert_query_toString_accessorio(l)
+        elif data["compatibilità"] == 'moto' or  data["compatibilità"] == 'Moto' or  data["compatibilità"] == 'motocicletta' or  data["compatibilità"] == 'Motocicletta':
+            query = f"select * from Acessorio where tipo_veicolo_compatibilità = 'Moto'"
+            db.read_in_db(mydb,query)
+            for elem in mydb:
+                l.append(elem)
+            return convert_query_toString_accessorio(l)
+        elif data["compatibilità"] == "":
+            query = f"select * from Acessorio"
+            db.read_in_db(mydb,query)
+            for elem in mydb:
+                l.append(elem)
+            return convert_query_toString_accessorio(l)
+        else:
+            return "Tipologia di compatibilità inesistente"
 api.run(host="127.0.0.1", port=8080)   
