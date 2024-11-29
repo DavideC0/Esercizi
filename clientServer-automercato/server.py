@@ -23,7 +23,7 @@ def controllo_privilegi_admin(user: dict):
 def convert_query_toString_veicolo(l: list):
     s = ""
     for elem in l:
-        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + " Prezzo base= " + str(elem[3]) + "\n"    
+        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + " Prezzo base= " + str(elem[3]) + "Filiale= "+ elem[4] + "\n"    
     return s
 
 def convert_query_toString_accessorio(l: list):
@@ -84,7 +84,7 @@ def ricerca_veicolo():
                 #query con entrambi
                 marca = data["marca"]
                 modello = data["modello"]
-                query = f"select * from Automobile where marca = '{marca}' and modello = '{modello}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Automobile a, filiale f where a.filiale = f.id and marca = '{marca}' and modello = '{modello}'"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
@@ -92,7 +92,7 @@ def ricerca_veicolo():
             elif data["marca"] and not data["modello"]:
                 #query con soltanto il primo
                 marca = data["marca"]
-                query = f"select * from Automobile where marca = '{marca}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Automobile a, filiale f where a.filiale = f.id and marca = '{marca}'"
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
@@ -100,13 +100,13 @@ def ricerca_veicolo():
             elif not data["marca"] and data["modello"]:
                 #query con soltato il secondo elemento
                 modello = data["modello"]
-                query = f"select * from Automobile where modello = '{modello}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Automobile a, filiale f where a.filiale = f.id and modello = '{modello}'"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
                 return convert_query_toString_veicolo(l)
             else:
-                query = f"select * from Automobile"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Automobile a, filiale f where a.filiale = f.id"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
@@ -116,7 +116,7 @@ def ricerca_veicolo():
                 #query con entrambi
                 marca = data["marca"]
                 modello = data["modello"]
-                query = f"select * from Motocicletta where marca = '{marca}' and modello = '{modello}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Motocicletta a, filiale f where a.filiale = f.id and marca = '{marca}' and modello = '{modello}'"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
@@ -124,7 +124,7 @@ def ricerca_veicolo():
             elif data["marca"] and not data["modello"]:
                 #query con soltanto il primo
                 marca = data["marca"]
-                query = f"select * from Motocicletta where marca = '{marca}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Motocicletta a, filiale f where a.filiale = f.id and marca = '{marca}'"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
@@ -132,14 +132,14 @@ def ricerca_veicolo():
             elif not data["marca"] and data["modello"]:
                 #query con soltato il secondo elemento
                 modello = data["modello"]
-                query = f"select * from Motocicletta wheremodello = '{modello}'"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Motocicletta a, filiale f where a.filiale = f.id modello = '{modello}'"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
                 return convert_query_toString_veicolo(l)
             else:
                 #query con nessun elemento specificato
-                query = f"select * from Motocicletta"
+                query = f"select a.targa, a.marca, a.modello, a.prezzo_base, f.nome from Motocicletta a, filiale f where a.filiale = f.id"
                 db.read_in_db(mydb, query)
                 for elem in mydb:
                     l.append(elem)
