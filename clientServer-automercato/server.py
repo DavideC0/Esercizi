@@ -33,7 +33,7 @@ def convert_query_toString_accessorio(l: list):
 def convert_query_toString_vendita(l: list):
     s = ""
     for elem in l:
-        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + " Prezzo iniziale= " + str(elem[3]) + " Data di vendita= " + str(elem[4]) + " Prezzo di vendita= " + str(elem[5]) + "\n"
+        s += "Targa= " + elem["targa"] + " Marca= " + elem["marca"] + " Modello= " + elem["modello"] + " Prezzo iniziale= " + str(elem["prezzo_base"]) + " Data di vendita= " + str(elem["data_vendita"]) + " Prezzo di vendita= " + str(elem["prezzo_vendita"]) + "\n"
     return s
     
 @api.route('/login', methods=['POST'])
@@ -187,32 +187,37 @@ def ricerca_vendite():
         if controllo_privilegi_admin(accesso):
             l = []
             if data["inizio"] != "" and data["fine"] != "":
-                #query con entrambi i limiti
+                #query con entrambi i limiti data_vendita between '{inizio}' and '{fine}'
                 inizio = data["inizio"]
                 fine = data["fine"]
-                query = f"select * from vendita_auto where data_vendita between '{inizio}' and '{fine}' union select * from vendita_moto where data_vendita between '{inizio}' and '{fine}'"
+                query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where data_vendita between '{inizio}' and '{fine}' and a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where data_vendita between '{inizio}' and '{fine}' and m.targa = v.targa_moto) t"
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return "0"
+                return convert_query_toString_vendita(l[0][0])
             elif data["inizio"] != "" and data["fine"] == "":
                 #query con solatanto il limite iniziale
-                return "1"
+                inizio = data["inizio"]
+                query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where data_vendita > '{inizio}' and a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where data_vendita > '{inizio}' and m.targa = v.targa_moto) t"
+                db.read_in_db(mydb,query)
+                for elem in mydb:
+                    l.append(elem)
+                return convert_query_toString_vendita(l[0][0])
             elif data["inizio"] == "" and data["fine"] != "":
                 #query con soltanto il limite finale
-                return "2"
+                fine = data["fine"]
+                query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where data_vendita <'{fine}' and a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where data_vendita <'{fine}' and m.targa = v.targa_moto) t"
+                db.read_in_db(mydb,query)
+                for elem in mydb:
+                    l.append(elem)
+                return convert_query_toString_vendita(l[0][0])
             else:
                 #query con tutto
                 query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where m.targa = v.targa_moto) t"
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                print(type(l))
-                print(type(l[0]))
-                
-                print(type(l[0][0]))
-                print(l[0][0])
-                return l
+                return convert_query_toString_vendita(l[0][0])
         return "Bad credentials"
         
         
