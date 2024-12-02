@@ -32,3 +32,13 @@ INSERT INTO vendita_moto (targa_moto, data_vendita, prezzo_vendita) VALUES
 ('QQ333RR', '2024-04-22', 23500.00),
 ('SS444TT', '2024-05-28', 6700.00),
 ('UU555VV', '2024-06-15', 17500.00);
+
+INSERT INTO Acessorio (nome, tipo_veicolo_compatibilità, descrizione, prezzo) VALUES
+('Portapacchi', 'Auto', 'Portapacchi universale per auto di medie dimensioni', 120.50),
+('Navigatore GPS', 'Auto', 'Navigatore GPS touchscreen con mappe aggiornate', 250.00),
+('Coperture sedili', 'Auto', 'Set di coperture in pelle ecologica per sedili anteriori', 85.75),
+('Catene da neve', 'Auto', 'Catene da neve per pneumatici di misura standard', 75.00),
+('Tappetini in gomma', 'Auto', 'Set di tappetini resistenti all’acqua e facili da pulire', 40.00),
+('Supporto smartphone', 'Moto', 'Supporto per smartphone resistente alle intemperie', 35.90),
+('Casco modulare', 'Moto', 'Casco modulare con doppia visiera anti-graffio', 150.00),
+('Guanti riscaldati', 'Moto', 'Guanti da moto con sistema di riscaldamento a batteria', 80.00);
