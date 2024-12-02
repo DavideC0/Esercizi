@@ -236,13 +236,36 @@ def inserisci_veicolo():
             except:
                 return "Il tipo di id della filiale inserita è sbagliato"
             if data["tipo_veicolo"] == 'auto' or  data["tipo_veicolo"] == 'Auto' or  data["tipo_veicolo"] == 'automobile' or  data["tipo_veicolo"] == 'Automobile':
+                print("auto")
                 targa = data["targa"]
                 marca = data["marca"]
                 modello = data["modello"]
                 prezzo = data["prezzo_base"]
                 filiale = data["filiale"]
-                query = f"insert into (targa, marca, modello, prezzo_base, filiale) values ('{targa}', '{marca}', '{modello}', '{prezzo}', '{filiale}')"
-                
+                query = f"insert into automobile (targa, marca, modello, prezzo_base, filiale) values ('{targa}', '{marca}', '{modello}', '{prezzo}', '{filiale}')"
+                try:
+                    db.write_in_db(mydb,query)
+                except Exception as e:
+                    print(e)
+                    return "Errore nell'inserimento"
+                return "Automobile aggiunta con successo"
+            elif data["tipo_veicolo"] == 'moto' or data["tipo_veicolo"] == 'Moto' or data["tipo_veicolo"] == 'motocicletta' or data["tipo_veicolo"] == 'Motocicletta':
+                print("moto")
+                targa = data["targa"]
+                marca = data["marca"]
+                modello = data["modello"]
+                prezzo = data["prezzo_base"]
+                filiale = data["filiale"]
+                query = f"insert into motocicletta (targa, marca, modello, prezzo_base, filiale) values ('{targa}', '{marca}', '{modello}', '{prezzo}', '{filiale}')"
+                try:
+                    db.write_in_db(mydb,query)
+                except Exception as e:
+                    print(e)
+                    return "Errore nell'inserimento"
+                return "Motocicletta aggiunta con successo"
+            else:
+                print("niente")
+                return "La tipologia inserita non è supportata"
                 
             
 api.run(host="127.0.0.1", port=8080)
