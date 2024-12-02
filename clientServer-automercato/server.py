@@ -266,6 +266,7 @@ def inserisci_veicolo():
             else:
                 print("niente")
                 return "La tipologia inserita non è supportata"
+        return "Bad credentials"
 
 @api.route('/inserisci_accessorio', methods=['POST'])
 def inserisci_accessorio():
@@ -294,5 +295,41 @@ def inserisci_accessorio():
                 print(e)
                 return "Errore nell'inserimento"
             return "Inserimento avvenuto con successo"
-            
+        return "Bad credentials"
+
+@api.route('/inserisci_vendita_auto', methods=['POST'])
+def inserisci_vendita_auto():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            targa = data["targa"]
+            data_vendita = data["data_vendita"]
+            prezzo_vendita = data["prezzo_vendita"]
+            query = f"insert into vendita_auto (targa_auto,data_vendita,prezzo_vendita) values ('{targa}','{data_vendita}','{prezzo_vendita}')"
+            try:
+                db.write_in_db(mydb,query)
+            except:
+                return "Errore nell'inserimento"
+            return "Inserimento avvenuto con successo"
+        return "Bad credentials"
+    
+@api.route('/inserisci_vendita_moto', methods=['POST'])
+def inserisci_vendita_moto():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            targa = data["targa"]
+            data_vendita = data["data_vendita"]
+            prezzo_vendita = data["prezzo_vendita"]
+            query = f"insert into vendita_moto (targa_moto,data_vendita,prezzo_vendita) values ('{targa}','{data_vendita}','{prezzo_vendita}')"
+            try:
+                db.write_in_db(mydb,query)
+            except:
+                return "Errore nell'inserimento"
+            return "Inserimento avvenuto con successo"
+        return "Bad credentials"
 api.run(host="127.0.0.1", port=8080)

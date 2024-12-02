@@ -139,7 +139,6 @@ while True:
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso])
                     print(response.content.decode("UTF-8"))
-                
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "2":
@@ -151,13 +150,19 @@ while True:
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "3":
-                print("Richiesto cittadino")
                 api_url = base_url + "/inserisci_vendita_auto"
-                jsonDataRequest = UpdateCittadino()
+                jsonDataRequest = inserisci_dati_vendita()
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
-                    print(response.content)
-                    
+                    print(response.content.decode("UTF-8"))
+                except:
+                    print("Problemi di comunicazione con il server, riprova più tardi")
+            elif operazione == "4":
+                api_url = base_url + "/inserisci_vendita_moto"
+                jsonDataRequest = inserisci_dati_vendita()
+                try:
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
+                    print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "5":
