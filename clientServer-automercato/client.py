@@ -1,5 +1,6 @@
-import requests,json
+import requests
 import sys
+import datetime
 
 base_url = "http://127.0.0.1:8080"
 auth = False
@@ -27,7 +28,31 @@ def ricercaveicolo():
 def ricercaaccessorio():
     compatibilità = input("Inserisci la compatibilità dell'accessorio ((auto, moto o lasciare vuoto per entrambi) ")
     return {"compatibilità": compatibilità}
-    
+
+def ricercavendita():
+        data_inizio = input("Inserisci la data di inizio (formato YYYY-MM-DD, inserire un formato sbagliato sarà come una data nulla, lasciare vuoto per non specificare) ")
+        data_fine = input("Inserisci la data di fine (formato YYYY-MM-DD, inserire un formato sbagliato sarà come una data nulla, lasciare vuoto per non specificare) ")
+        l = {}
+        if data_inizio != "":
+            try:
+                datetime.date.fromisoformat(data_inizio)
+            except:
+                data_inizio = ""
+            finally:
+                l["inizio"] = data_inizio
+        else:
+            l["inizio"] = data_inizio
+        
+        if data_fine != "":
+            try:
+                datetime.date.fromisoformat(data_fine)
+            except:
+                data_fine = ""
+            finally:
+                l["fine"] = data_fine
+        else:
+            l["fine"] = data_fine
+        return l
 
 stato = -1
 while True:
@@ -79,7 +104,7 @@ while True:
             print("3. Inserisci dati di vendita di un auto")
             print("4. Inserisci dati di vendita di una moto")
             print("5. Ottieni report vendite")
-            print("6. Ottieni report vendite tra due date")
+            print("6. Registra un nuovo admin")
             print("7. Logout")
             print("8. Esci")
             sOper = input("Cosa vuoi fare? ")
@@ -113,14 +138,12 @@ while True:
                     
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "4":
-                print("Richiesto cittadino")
-                api_url = base_url + "/delete_cittadino"
-                jsonDataRequest = DeleteCittadino()
+            elif sOper == "5":
+                api_url = base_url + "/ricerca_vendite"
+                jsonDataRequest = ricercavendita()
                 try:
-                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
-                    print(response.content)
-                    
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
+                    print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif sOper == "7":

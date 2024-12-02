@@ -10,15 +10,13 @@ if mydb is None:
     sys.exit()
     
 def controllo_privilegi_admin(user: dict):
-    for key, value in user.items():
-        sQuery = f"select stato from utenti where username = '{key}' and pass = '{value[0]}';"
-        print(sQuery)
-        n_record = db.read_in_db(mydb, sQuery)
-        if n_record == 1:
-            lRecord = db.read_next_row(mydb)
-            iStato = lRecord[1][0]
-            return iStato
-        return False
+    username = user["username"]
+    password = user["password"]
+    query = f"select * from utente where username = '{username}' and password = '{password}'"
+    n_record = db.read_in_db(mydb,query)
+    if n_record == 1:
+        return True
+    return False
     
 def convert_query_toString_veicolo(l: list):
     s = ""
@@ -30,7 +28,13 @@ def convert_query_toString_accessorio(l: list):
     s = ""
     for elem in l:
         s += "Id= " + str(elem[0]) + " Nome= " + elem[1] + " Compatibilità= " + elem[2] + " Descrizione= " + elem[3] + " Prezzo= " + str(elem[4]) + "\n"
-    return s    
+    return s
+
+def convert_query_toString_vendita(l: list):
+    s = ""
+    for elem in l:
+        s += "Targa= " + elem[0] + " Marca= " + elem[1] + " Modello= " + elem[2] + " Prezzo iniziale= " + str(elem[3]) + " Data di vendita= " + str(elem[4]) + " Prezzo di vendita= " + str(elem[5]) + "\n"
+    return s
     
 @api.route('/login', methods=['POST'])
 def login():
@@ -173,4 +177,45 @@ def ricerca_accessorio():
             return convert_query_toString_accessorio(l)
         else:
             return "Tipologia di compatibilità inesistente"
+        
+@api.route('/ricerca_vendite', methods=['POST'])
+def ricerca_vendite():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            l = []
+            if data["inizio"] != "" and data["fine"] != "":
+                #query con entrambi i limiti
+                inizio = data["inizio"]
+                fine = data["fine"]
+                query = f"select * from vendita_auto where data_vendita between '{inizio}' and '{fine}' union select * from vendita_moto where data_vendita between '{inizio}' and '{fine}'"
+                db.read_in_db(mydb,query)
+                for elem in mydb:
+                    l.append(elem)
+                return "0"
+            elif data["inizio"] != "" and data["fine"] == "":
+                #query con solatanto il limite iniziale
+                return "1"
+            elif data["inizio"] == "" and data["fine"] != "":
+                #query con soltanto il limite finale
+                return "2"
+            else:
+                #query con tutto
+                query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where m.targa = v.targa_moto) t"
+                db.read_in_db(mydb,query)
+                for elem in mydb:
+                    l.append(elem)
+                print(type(l))
+                print(type(l[0]))
+                
+                print(type(l[0][0]))
+                print(l[0][0])
+                return l
+        return "Bad credentials"
+        
+        
+        
+        
 api.run(host="127.0.0.1", port=8080)   
