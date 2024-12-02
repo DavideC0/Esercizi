@@ -31,13 +31,19 @@ def aggiungi_veicolo():
     targa = input("Inserisci la targa ")
     marca = input("Inserisci la marca ")
     modello = input("Inserisci il modello ")
-    prezzo_base = input("Inserisci il prezzo di base")
-    filiale = input("Inserisci l'id della filiale")
+    prezzo_base = input("Inserisci il prezzo di base ")
+    filiale = input("Inserisci l'id della filiale ")
     return {"tipo_veicolo": tipo_veicolo,"targa": targa, "marca": marca, "modello": modello, "prezzo_base": prezzo_base, "filiale":filiale}
 
 def ricercaaccessorio():
     compatibilità = input("Inserisci la compatibilità dell'accessorio ((auto, moto o lasciare vuoto per entrambi) ")
     return {"compatibilità": compatibilità}
+def aggiungi_accessorio():
+    nome = input("Inserisci il nome dell'accessorio ")
+    compatibilita = input("Inserisci per uale tipo di veicolo è usato (auto o moto) ")
+    descrizione = input("Inserisci la descrizione dell'accessorio ")
+    prezzo = input("Inserisci quanto costa ")
+    return {"nome": nome, "compatibilità": compatibilita, "descrizione": descrizione, "prezzo": prezzo}
 
 def ricercavendita():
         data_inizio = input("Inserisci la data di inizio (formato YYYY-MM-DD, inserire un formato sbagliato sarà come una data nulla, lasciare vuoto per non specificare) ")
@@ -63,8 +69,17 @@ def ricercavendita():
         else:
             l["fine"] = data_fine
         return l
-
-stato = -1
+    
+def inserisci_dati_vendita():
+    targa = input("Inserisci la targa del veicolo venduto ")
+    data_vendita = input("Inserisci quando è stato venduto (formato YYYY-MM-DD) ")
+    prezzo_vendita = input("Inserisci il prezzo di vendita")
+    try:
+        datetime.date.fromisoformat(data_vendita)
+    except:
+        data_vendita = "2000-01-01"
+    return {"targa": targa, "data_vendita": data_vendita, "prezzo_vendita": prezzo_vendita}
+    
 while True:
     if not auth:
         print("Operazioni disponibili:")
@@ -119,7 +134,6 @@ while True:
             print("8. Esci")
             operazione = input("Cosa vuoi fare? ")
             if operazione == "1":
-                print("Richiesto atto di nascita")
                 api_url = base_url + "/inserisci_veicolo"
                 jsonDataRequest = aggiungi_veicolo()
                 try:
@@ -129,18 +143,16 @@ while True:
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "2":
-                print("Richiesto cittadino")
-                api_url = base_url + "/read_cittadino"
-                jsonDataRequest = GetCittadino()
+                api_url = base_url + "/inserisci_accessorio"
+                jsonDataRequest = aggiungi_accessorio()
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
-                    print(response.content)
-                    
+                    print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "3":
                 print("Richiesto cittadino")
-                api_url = base_url + "/update_cittadino"
+                api_url = base_url + "/inserisci_vendita_auto"
                 jsonDataRequest = UpdateCittadino()
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)

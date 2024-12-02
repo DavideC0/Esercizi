@@ -266,6 +266,33 @@ def inserisci_veicolo():
             else:
                 print("niente")
                 return "La tipologia inserita non è supportata"
-                
+
+@api.route('/inserisci_accessorio', methods=['POST'])
+def inserisci_accessorio():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            try:
+                data["prezzo"] = float(data["prezzo"])
+            except:
+                return "Prezzo inserito non valido"
+            if data["compatibilità"] == 'auto' or  data["compatibilità"] == 'Auto' or  data["compatibilità"] == 'automobile' or  data["compatibilità"] == 'Automobile':
+                compatibilità = "Auto"
+            elif data["compatibilità"] == 'moto' or  data["compatibilità"] == 'Moto' or  data["compatibilità"] == 'motocicletta' or  data["compatibilità"] == 'Motocicletta':
+                compatibilità = "Moto"
+            else:
+                return "Tipologia di compatibilità non esistente"
+            nome = data["nome"]
+            descrizione = data["descrizione"]
+            prezzo = data["prezzo"]
+            query = f"insert into acessorio (nome,tipo_veicolo_compatibilità,descrizione,prezzo) values ('{nome}','{compatibilità}','{descrizione}','{prezzo}')"
+            try:
+                db.write_in_db(mydb,query)
+            except Exception as e:
+                print(e)
+                return "Errore nell'inserimento"
+            return "Inserimento avvenuto con successo"
             
 api.run(host="127.0.0.1", port=8080)
