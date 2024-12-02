@@ -154,7 +154,7 @@ while True:
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso])
                     with open("risultati.json", "w") as file:
-                        json.dump(response.content, file, indent=4)
+                        json.dump(response.json(), file, indent=4)
                     print("Risultati salvati in risultati.json")
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
