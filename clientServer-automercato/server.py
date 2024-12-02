@@ -219,8 +219,30 @@ def ricerca_vendite():
                     l.append(elem)
                 return l[0][0]
         return "Bad credentials"
-        
-        
-        
-        
-api.run(host="127.0.0.1", port=8080)   
+    
+@api.route('/inserisci_veicolo', methods=['POST'])
+def inserisci_veicolo():
+    content_type = request.headers.get('Content_Type')
+    if (content_type == 'application/json'):
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            try:
+                data['prezzo_base'] = float(data["prezzo_base"])
+            except:
+                return "Il prezzo base inserito non è un tipo valido"
+            try:
+                data["filiale"] = int(data["filiale"])
+            except:
+                return "Il tipo di id della filiale inserita è sbagliato"
+            if data["tipo_veicolo"] == 'auto' or  data["tipo_veicolo"] == 'Auto' or  data["tipo_veicolo"] == 'automobile' or  data["tipo_veicolo"] == 'Automobile':
+                targa = data["targa"]
+                marca = data["marca"]
+                modello = data["modello"]
+                prezzo = data["prezzo_base"]
+                filiale = data["filiale"]
+                query = f"insert into (targa, marca, modello, prezzo_base, filiale) values ('{targa}', '{marca}', '{modello}', '{prezzo}', '{filiale}')"
+                
+                
+            
+api.run(host="127.0.0.1", port=8080)

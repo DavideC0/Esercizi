@@ -26,6 +26,15 @@ def ricercaveicolo():
         l["modello"] = False
     return l
 
+def aggiungi_veicolo():
+    tipo_veicolo = input("Inserisci il tipo di veicolo (auto o moto) ")
+    targa = input("Inserisci la targa ")
+    marca = input("Inserisci la marca ")
+    modello = input("Inserisci il modello ")
+    prezzo_base = input("Inserisci il prezzo di base")
+    filiale = input("Inserisci l'id della filiale")
+    return {"tipo_veicolo": tipo_veicolo,"targa": targa, "marca": marca, "modello": modello, "prezzo_base": prezzo_base, "filiale":filiale}
+
 def ricercaaccessorio():
     compatibilità = input("Inserisci la compatibilità dell'accessorio ((auto, moto o lasciare vuoto per entrambi) ")
     return {"compatibilità": compatibilità}
@@ -108,18 +117,18 @@ while True:
             print("6. Registra un nuovo admin")
             print("7. Logout")
             print("8. Esci")
-            sOper = input("Cosa vuoi fare? ")
-            if sOper == "1":
+            operazione = input("Cosa vuoi fare? ")
+            if operazione == "1":
                 print("Richiesto atto di nascita")
-                api_url = base_url + "/add_cittadino"
-                jsonDataRequest = GetDatiCittadino()
+                api_url = base_url + "/inserisci_veicolo"
+                jsonDataRequest = aggiungi_veicolo()
                 try:
-                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
-                    print(response.content)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
+                    print(response.content.decode("UTF-8"))
                 
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "2":
+            elif operazione == "2":
                 print("Richiesto cittadino")
                 api_url = base_url + "/read_cittadino"
                 jsonDataRequest = GetCittadino()
@@ -129,7 +138,7 @@ while True:
                     
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "3":
+            elif operazione == "3":
                 print("Richiesto cittadino")
                 api_url = base_url + "/update_cittadino"
                 jsonDataRequest = UpdateCittadino()
@@ -139,7 +148,7 @@ while True:
                     
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "5":
+            elif operazione == "5":
                 api_url = base_url + "/ricerca_vendite"
                 jsonDataRequest = ricercavendita()
                 try:
@@ -149,10 +158,10 @@ while True:
                     print("Risultati salvati in risultati.json")
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
-            elif sOper == "7":
+            elif operazione == "7":
                 auth = False
                 print("Logout effetuato con successo")
                 break
-            elif sOper=="8":
+            elif operazione=="8":
                 print("Buona giornata!")
                 sys.exit()  
