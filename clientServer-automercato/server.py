@@ -194,7 +194,7 @@ def ricerca_vendite():
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString_vendita(l[0][0])
+                return l[0][0]
             elif data["inizio"] != "" and data["fine"] == "":
                 #query con solatanto il limite iniziale
                 inizio = data["inizio"]
@@ -202,7 +202,7 @@ def ricerca_vendite():
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString_vendita(l[0][0])
+                return l[0][0]
             elif data["inizio"] == "" and data["fine"] != "":
                 #query con soltanto il limite finale
                 fine = data["fine"]
@@ -210,14 +210,14 @@ def ricerca_vendite():
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString_vendita(l[0][0])
+                return l[0][0]
             else:
                 #query con tutto
                 query = f"select json_agg(t) from (select a.targa, a.marca, a.modello, a.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_auto v, Automobile a where a.targa = v.targa_auto union select m.targa, m.marca, m.modello, m.prezzo_base, v.data_vendita, v.prezzo_vendita from vendita_moto v, motocicletta m where m.targa = v.targa_moto) t"
                 db.read_in_db(mydb,query)
                 for elem in mydb:
                     l.append(elem)
-                return convert_query_toString_vendita(l[0][0])
+                return l[0][0]
         return "Bad credentials"
         
         

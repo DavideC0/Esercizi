@@ -1,6 +1,7 @@
 import requests
 import sys
 import datetime
+import json
 
 base_url = "http://127.0.0.1:8080"
 auth = False
@@ -143,7 +144,9 @@ while True:
                 jsonDataRequest = ricercavendita()
                 try:
                     response = requests.post(api_url,json=[jsonDataRequest,accesso])
-                    print(response.content.decode("UTF-8"))
+                    with open("risultati.json", "w") as file:
+                        json.dump(response.content, file, indent=4)
+                    print("Risultati salvati in risultati.json")
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif sOper == "7":
