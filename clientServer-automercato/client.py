@@ -145,7 +145,7 @@ while True:
                 api_url = base_url + "/inserisci_accessorio"
                 jsonDataRequest = aggiungi_accessorio()
                 try:
-                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
                     print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
@@ -153,7 +153,7 @@ while True:
                 api_url = base_url + "/inserisci_vendita_auto"
                 jsonDataRequest = inserisci_dati_vendita()
                 try:
-                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
                     print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
@@ -161,7 +161,7 @@ while True:
                 api_url = base_url + "/inserisci_vendita_moto"
                 jsonDataRequest = inserisci_dati_vendita()
                 try:
-                    response = requests.post(api_url,json=[jsonDataRequest,accesso], verify=False)
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
                     print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
@@ -173,6 +173,14 @@ while True:
                     with open("risultati.json", "w") as file:
                         json.dump(response.json(), file, indent=4)
                     print("Risultati salvati in risultati.json")
+                except:
+                    print("Problemi di comunicazione con il server, riprova più tardi")
+            elif operazione == "6":
+                api_url = base_url + "/registrazione"
+                jsonDataRequest = Login()
+                try:
+                    response = requests.post(api_url,json=[jsonDataRequest,accesso])
+                    print(response.content.decode("UTF-8"))
                 except:
                     print("Problemi di comunicazione con il server, riprova più tardi")
             elif operazione == "7":

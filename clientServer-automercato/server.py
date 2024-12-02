@@ -62,18 +62,17 @@ def Registrazione():
     content_type = request.headers.get('Content-Type')
     print("Ricevuta chiamata " + content_type)
     if (content_type == 'application/json'):
-        for key, value in request.json.items():
-            sQuery = f"insert into utenti(username,pass,stato) values ('{key}', '{value[0]}',{random.randint(0,1)})"
-            print(sQuery)
-            iRetValue = db.write_in_db(mydb, sQuery) #restituisce 0 se è andato tutto bene, -1 errore, -2 duplicate key
-            print(iRetValue)
-            if iRetValue == -2:
-                return "Nome utente già in uso"
-            elif iRetValue == 0:
-                return "Registrazione avvenuta con successo"
-            else:
-                return "Errore non gestito nella registrazione"
-        return "Errore richiesta non conforme"
+        data = request.json[0]
+        accesso = request.json[1]
+        if controllo_privilegi_admin(accesso):
+            username = data["username"]
+            password = data["password"]
+            query = f"insert into utente(username,password) values ('{username}', '{password}')"
+            try:
+                db.write_in_db(mydb, query)
+            except:
+                return "Registrazione fallita"
+            return "Registrazione avvenuta con successo"
     else:
         return 'Content-Type not supported!'
     
