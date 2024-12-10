@@ -11,9 +11,8 @@ def index():
 def ricevidati():
     domanda = request.form.get('question')
     image = request.files.get("image")
-    lunghezza = len(image)
     
-    answer = domanda + " file immagine " + str(lunghezza)
+    answer = domanda + " file immagine " + str(image)
     return render_template("send.html", answer=answer)
     
 
